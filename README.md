@@ -62,8 +62,10 @@ python3-libnvinfer`
 python3-libnvinfer-lean`
 * `python3-libnvinfer-dispatch`
 
-* Verify the installation.
-```dpkg-query -W tensorrt```
+Verify the installation.
+```
+dpkg-query -W tensorrt
+```
 You should see something similar to the following:
 `tensorrt	8.6.1.x-1+cuda12.0`
 
