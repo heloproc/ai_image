@@ -1,0 +1,1754 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-us" unselectable="" class=""><head unselectable="" class=""><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" unselectable="" class="">
+      <meta name="copyright" content="(C) Copyright 2005" unselectable="" class="">
+      <meta name="DC.rights.owner" content="(C) Copyright 2005" unselectable="" class="">
+      <meta name="DC.Type" content="concept" unselectable="" class="">
+      <meta name="DC.Title" content="Abstract" unselectable="" class="">
+      <meta name="abstract" content="This NVIDIA TensorRT 8.6.1 Quick Start Guide is a starting point for developers who want to try out TensorRT SDK; specifically, this document demonstrates how to quickly construct an application to run inference on a TensorRT engine." unselectable="" class="">
+      <meta name="description" content="This NVIDIA TensorRT 8.6.1 Quick Start Guide is a starting point for developers who want to try out TensorRT SDK; specifically, this document demonstrates how to quickly construct an application to run inference on a TensorRT engine." unselectable="" class="">
+      <meta name="DC.Coverage" content="Getting Started" unselectable="" class="">
+      <meta name="DC.subject" content="Quick Start Guide" unselectable="" class="">
+      <meta name="keywords" content="Quick Start Guide" unselectable="" class="">
+      <meta name="DC.Format" content="XHTML" unselectable="" class="">
+      <meta name="DC.Identifier" content="abstract" unselectable="" class="">
+      <link rel="stylesheet" type="text/css" href="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/commonltr.css" unselectable="" class="">
+      <link rel="stylesheet" type="text/css" href="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/site.css" unselectable="" class="">
+      <title unselectable="" class="">Quick Start Guide :: NVIDIA Deep Learning TensorRT Documentation</title>
+      <!--[if lt IE 9]>
+      <script src="../common/formatting/html5shiv-printshiv.min.js"></script>
+      <![endif]-->
+      <script type="text/javascript" async="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/xdc.js.download" unselectable="" class=""></script><script type="text/javascript" async="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/xdc.js(1).download" unselectable="" class=""></script><script type="text/javascript" async="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/xdc.js(2).download" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/launch-191c2462b890.min.js.download" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/EX6b66a5dab5b3476c9c58636d2f3e57f7-libraryCode_source.min.js.download" async="" unselectable="" class=""></script><script unselectable="" class="">_satellite["_runScript1"](function(event, target, Promise) {
+function generateToken(){
+	//return state after it has any double quotations removed
+	var d = new Date().getTime();//Timestamp
+	var d2 = (performance && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = Math.random() * 16;//random number between 0 and 16
+		if(d > 0){//Use timestamp until depleted
+			r = (d + r)%16 | 0;
+			d = Math.floor(d/16);
+		} else {//Use microseconds since page-load if supported
+			r = (d2 + r)%16 | 0;
+			d2 = Math.floor(d2/16);
+		}
+		return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+	});
+}
+
+
+
+
+/*assign user a Anonymous token on page load if not allready available*/
+
+//jQuery(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function() {
+  try{
+	/*Setting Anonymous Cookie*/
+	const cookieAToken = "nvweb_A";
+	const cookieEToken = "nvweb_E";
+	/*assign anonymous token*/
+	if (typeof Cookies!== "undefined" && typeof Cookies.get("nvweb_A")=== "undefined") {
+		const cookieValue = generateToken();
+		const daysToExpire = new Date(3147483647 * 1000).toUTCString();
+		document.cookie = cookieAToken + '=' + cookieValue + ';domain=.nvidia.com;path=/' + '; expires=' + daysToExpire; 
+	}
+	
+	/*assign passed param  token*/
+	var paramresults = new RegExp('[\?&]' + 'cookieNameEmail' + '=([^&#]*)').exec(window.location.href);
+	if (paramresults!=null) {
+		const cookieValue = NVIDIAGDC.Browser.getUrlParameter("nvweb_E");
+		const daysToExpire = new Date(3147483647 * 1000).toUTCString();
+		document.cookie = cookieEToken + '=' + paramresults[1] + ';domain=.nvidia.com;path=/' + '; expires=' + daysToExpire; 
+    
+  }
+}catch(e){console.log("webtoken: "+e)}
+
+});
+});</script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/EX6b66a5dab5b3476c9c58636d2f3e57f7-libraryCode_source.min.js(1).download" async="" unselectable="" class=""></script><script unselectable="" class="">_satellite["_runScript1"](function(event, target, Promise) {
+function generateToken(){
+	//return state after it has any double quotations removed
+	var d = new Date().getTime();//Timestamp
+	var d2 = (performance && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = Math.random() * 16;//random number between 0 and 16
+		if(d > 0){//Use timestamp until depleted
+			r = (d + r)%16 | 0;
+			d = Math.floor(d/16);
+		} else {//Use microseconds since page-load if supported
+			r = (d2 + r)%16 | 0;
+			d2 = Math.floor(d2/16);
+		}
+		return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+	});
+}
+
+
+
+
+/*assign user a Anonymous token on page load if not allready available*/
+
+//jQuery(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function() {
+  try{
+	/*Setting Anonymous Cookie*/
+	const cookieAToken = "nvweb_A";
+	const cookieEToken = "nvweb_E";
+	/*assign anonymous token*/
+	if (typeof Cookies!== "undefined" && typeof Cookies.get("nvweb_A")=== "undefined") {
+		const cookieValue = generateToken();
+		const daysToExpire = new Date(3147483647 * 1000).toUTCString();
+		document.cookie = cookieAToken + '=' + cookieValue + ';domain=.nvidia.com;path=/' + '; expires=' + daysToExpire; 
+	}
+	
+	/*assign passed param  token*/
+	var paramresults = new RegExp('[\?&]' + 'cookieNameEmail' + '=([^&#]*)').exec(window.location.href);
+	if (paramresults!=null) {
+		const cookieValue = NVIDIAGDC.Browser.getUrlParameter("nvweb_E");
+		const daysToExpire = new Date(3147483647 * 1000).toUTCString();
+		document.cookie = cookieEToken + '=' + paramresults[1] + ';domain=.nvidia.com;path=/' + '; expires=' + daysToExpire; 
+    
+  }
+}catch(e){console.log("webtoken: "+e)}
+
+});
+});</script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/EX6b66a5dab5b3476c9c58636d2f3e57f7-libraryCode_source.min.js(2).download" async="" unselectable="" class=""></script><script unselectable="" class="">_satellite["_runScript1"](function(event, target, Promise) {
+function generateToken(){
+	//return state after it has any double quotations removed
+	var d = new Date().getTime();//Timestamp
+	var d2 = (performance && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = Math.random() * 16;//random number between 0 and 16
+		if(d > 0){//Use timestamp until depleted
+			r = (d + r)%16 | 0;
+			d = Math.floor(d/16);
+		} else {//Use microseconds since page-load if supported
+			r = (d2 + r)%16 | 0;
+			d2 = Math.floor(d2/16);
+		}
+		return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+	});
+}
+
+
+
+
+/*assign user a Anonymous token on page load if not allready available*/
+
+//jQuery(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function() {
+  try{
+	/*Setting Anonymous Cookie*/
+	const cookieAToken = "nvweb_A";
+	const cookieEToken = "nvweb_E";
+	/*assign anonymous token*/
+	if (typeof Cookies!== "undefined" && typeof Cookies.get("nvweb_A")=== "undefined") {
+		const cookieValue = generateToken();
+		const daysToExpire = new Date(3147483647 * 1000).toUTCString();
+		document.cookie = cookieAToken + '=' + cookieValue + ';domain=.nvidia.com;path=/' + '; expires=' + daysToExpire; 
+	}
+	
+	/*assign passed param  token*/
+	var paramresults = new RegExp('[\?&]' + 'cookieNameEmail' + '=([^&#]*)').exec(window.location.href);
+	if (paramresults!=null) {
+		const cookieValue = NVIDIAGDC.Browser.getUrlParameter("nvweb_E");
+		const daysToExpire = new Date(3147483647 * 1000).toUTCString();
+		document.cookie = cookieEToken + '=' + paramresults[1] + ';domain=.nvidia.com;path=/' + '; expires=' + daysToExpire; 
+    
+  }
+}catch(e){console.log("webtoken: "+e)}
+
+});
+});</script>
+      <script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/jquery-3.6.0.min.js.download" unselectable="" class=""></script>
+      <script type="text/javascript" charset="utf-8" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/jquery.ba-hashchange.min.js.download" unselectable="" class=""></script>
+      <script type="text/javascript" charset="utf-8" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/jquery.scrollintoview.min.js.download" unselectable="" class=""></script>
+      <script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/htmlFileList.js.download" unselectable="" class=""></script>
+      <script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/htmlFileInfoList.js.download" unselectable="" class=""></script>
+      <script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/nwSearchFnt.min.js.download" unselectable="" class=""></script>
+      <script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/en_stemmer.min.js.download" unselectable="" class=""></script>
+      <script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/index-1.js.download" unselectable="" class=""></script>
+      <script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/index-2.js.download" unselectable="" class=""></script>
+      <script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/index-3.js.download" unselectable="" class=""></script>
+      <link rel="canonical" href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html" unselectable="" class="">
+      <link rel="stylesheet" href="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/fonts.css" unselectable="" class="">
+      <link rel="stylesheet" href="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/nv-developer-menu.css" unselectable="" class=""><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/nv-developer-menu.js.download" unselectable="" class=""></script><link rel="stylesheet" type="text/css" href="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/qwcode.highlight.css" unselectable="" class="">
+   <script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/RC3044e128f8484f9fbd79fb67982aad03-source.min.js.download" async="" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/RC7f83b460835442afa056361d98b330a0-source.min.js.download" async="" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/RCbf16bb472abb40929cc50221ca3dd84e-source.min.js.download" async="" unselectable="" class=""></script><script type="text/javascript" async="" id="bizible-settings" data-account="nvidia" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/bizible.js.download" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/RCde71e17d940247cd96c4c6b7435d0fdd-source.min.js.download" async="" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/RC5a4c19c26f7d4c809c8544e0554c8df0-source.min.js.download" async="" unselectable="" class=""></script><script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/js" unselectable="" class=""></script><script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/cdtm.js.download" unselectable="" class=""></script><script type="text/javascript" async="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/c6af8848c2687.js.download" unselectable="" class=""></script><meta http-equiv="origin-trial" content="AymqwRC7u88Y4JPvfIF2F37QKylC04248hLCdJAsh8xgOfe/dVJPV3XS3wLFca1ZMVOtnBfVjaCMTVudWM//5g4AAAB7eyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGV0YWdtYW5hZ2VyLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjk1MTY3OTk5LCJpc1RoaXJkUGFydHkiOnRydWV9" unselectable="" class=""><script type="text/javascript" async="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/f.txt" unselectable="" class=""></script><script type="text/javascript" async="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/f(1).txt" unselectable="" class=""></script><script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/js(1)" unselectable="" class=""></script><meta http-equiv="origin-trial" content="AymqwRC7u88Y4JPvfIF2F37QKylC04248hLCdJAsh8xgOfe/dVJPV3XS3wLFca1ZMVOtnBfVjaCMTVudWM//5g4AAAB7eyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGV0YWdtYW5hZ2VyLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjk1MTY3OTk5LCJpc1RoaXJkUGFydHkiOnRydWV9" unselectable="" class=""><script type="text/javascript" async="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/f(2).txt" unselectable="" class=""></script><script type="text/javascript" async="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/f(3).txt" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/RC3044e128f8484f9fbd79fb67982aad03-source.min.js(1).download" async="" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/RC7f83b460835442afa056361d98b330a0-source.min.js(1).download" async="" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/RCbf16bb472abb40929cc50221ca3dd84e-source.min.js(1).download" async="" unselectable="" class=""></script><script type="text/javascript" async="" id="bizible-settings" data-account="nvidia" src="file://cdn.bizible.com/scripts/bizible.js?account=nvidia" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/RCde71e17d940247cd96c4c6b7435d0fdd-source.min.js(1).download" async="" unselectable="" class=""></script><script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/js(1)" unselectable="" class=""></script><script type="text/javascript" async="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/f(4).txt" unselectable="" class=""></script><script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/cdtm.js(1).download" unselectable="" class=""></script><script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/js(2)" unselectable="" class=""></script><meta http-equiv="origin-trial" content="AymqwRC7u88Y4JPvfIF2F37QKylC04248hLCdJAsh8xgOfe/dVJPV3XS3wLFca1ZMVOtnBfVjaCMTVudWM//5g4AAAB7eyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGV0YWdtYW5hZ2VyLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjk1MTY3OTk5LCJpc1RoaXJkUGFydHkiOnRydWV9" unselectable="" class=""><script type="text/javascript" async="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/f(5).txt" unselectable="" class=""></script><script type="text/javascript" async="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/f(6).txt" unselectable="" class=""></script><script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/js(2)" unselectable="" class=""></script><script type="text/javascript" async="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/f(7).txt" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/RC3044e128f8484f9fbd79fb67982aad03-source.min.js(2).download" async="" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/RC7f83b460835442afa056361d98b330a0-source.min.js(2).download" async="" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/RCbf16bb472abb40929cc50221ca3dd84e-source.min.js(2).download" async="" unselectable="" class=""></script><script type="text/javascript" async="" id="bizible-settings" data-account="nvidia" src="file://cdn.bizible.com/scripts/bizible.js?account=nvidia" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/RCde71e17d940247cd96c4c6b7435d0fdd-source.min.js(2).download" async="" unselectable="" class=""></script><script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/js(2)" unselectable="" class=""></script><script type="text/javascript" async="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/f(8).txt" unselectable="" class=""></script><script type="text/javascript" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/cdtm.js(2).download" unselectable="" class=""></script></head>
+   <body class="online" unselectable="">
+      
+      <cs-native-frame-holder hidden="" unselectable="" class=""><template shadowrootmode="closed"><iframe id="cs-native-frame" hidden="" title="Intentionally blank" sandbox="allow-same-origin"></iframe></template></cs-native-frame-holder><cs-native-frame-holder hidden="" unselectable="" class=""><template shadowrootmode="closed"><iframe id="cs-native-frame" hidden="" title="Intentionally blank" sandbox="allow-same-origin"></iframe></template></cs-native-frame-holder><header id="nv-dev-header" unselectable="" class=""><nav class="svelte-m3nssk" unselectable="">  </nav></header>
+      <div id="site-content" unselectable="" class="">
+         
+         <div id="resize-nav" class="nav-closed" unselectable=""><div id="toggle-nav" class="nav-closed" unselectable=""></div><div id="toggle-nav" unselectable="" class=""></div></div>
+         <nav id="search-results" unselectable="" class="">
+            <h2 unselectable="" class="">Search Results</h2>
+            <ol unselectable="" class=""></ol>
+         </nav>
+         <div id="contents-container" unselectable="" class="">
+            <div id="title-search-container" unselectable="" class="">
+               <div id="site-title" unselectable="" class="">NVIDIA Deep Learning TensorRT Installation Guide
+                  
+               </div>
+               
+            </div>
+            <div id="breadcrumbs-container" unselectable="" class=""></div>
+            <article id="contents" unselectable="" class="">
+               <div class="topic nested0" id="abstract" unselectable=""><a name="abstract" shape="rect" unselectable="" class="">
+                     <!-- --></a><h2 class="title topictitle1" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#abstract" name="abstract" shape="rect" unselectable="" class="">Abstract</a></h2>
+                  <div class="body conbody" unselectable="">
+                     <p class="shortdesc" unselectable="">This NVIDIA TensorRT 8.6.1 Quick Start Guide is a starting point for developers who
+                        want to try out TensorRT SDK; specifically, this document demonstrates how to quickly
+                        construct an application to run inference on a TensorRT engine.
+                     </p>
+                     <p class="p" unselectable="">Ensure you are familiar with the <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/release-notes/index.html" target="_blank" shape="rect" unselectable="">NVIDIA TensorRT Release Notes</a> for the latest
+                        new features and known issues.
+                     </p>
+                     <p class="p" unselectable="">For previously released TensorRT documentation, refer to the <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html" target="_blank" shape="rect" unselectable="">TensorRT Archives</a>.
+                     </p>
+                  </div>
+               </div>
+               <div class="topic concept nested0" id="introduction" unselectable=""><a name="introduction" shape="rect" unselectable="" class="">
+                     <!-- --></a>
+                  <div class="body conbody" unselectable="">
+                     
+                     <p class="p" unselectable="">After you have trained your deep learning model in a framework of your choice, TensorRT
+                        enables you to run it with higher throughput and lower latency.
+                     </p>
+                     
+                     <p class="p" unselectable="">This guide covers the basic installation, conversion, and runtime options available in
+                        TensorRT, and when they are best applied.
+                     </p>
+                     <div class="p" unselectable="">Here is a quick summary of each chapter:
+                        <dl class="dl" unselectable="">
+                           
+                           
+                           
+                           
+                           
+                           
+                           <dt class="dt dltermexpand" unselectable=""><a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#framework-integration" title="The TF-TRT integration provides a simple and flexible way to get started with TensorRT. TF-TRT is a high-level Python interface for TensorRT that works directly with TensorFlow models. It allows you to convert TensorFlow SavedModels to TensorRT optimized models and run them within Python using a high-level API." shape="rect" unselectable="">TF-TRT Framework Integration</a></dt>
+                           <dd class="dd" unselectable="">We introduce the TensorRT (TRT) inside of Google<sup unselectable="" class="">®</sup>
+                              TensorFlow (TF) integration.
+                           </dd>
+                           <dt class="dt dltermexpand" unselectable=""><a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#onnx-export" shape="rect" unselectable="">ONNX Conversion and Deployment</a></dt>
+                           <dd class="dd" unselectable="">We provide a broad overview of ONNX exports from TensorFlow and PyTorch, as
+                              well as pointers to Jupyter notebooks that go into more detail.
+                           </dd>
+                           <dt class="dt dltermexpand" unselectable=""><a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#runtime" title="One of the most performant and customizable options for both model conversion and deployment are to use the TensorRT API, which has both C++ and Python bindings." shape="rect" unselectable="">Using the TensorRT Runtime API</a></dt>
+                           <dd class="dd" unselectable="">We provide a tutorial to illustrate semantic segmentation of images using
+                              the TensorRT C++ and Python API.
+                           </dd>
+                        </dl>
+                     </div>
+                     <p class="p" unselectable="">For a higher-level application that allows you to quickly deploy your model, refer to the
+                        <a class="xref" href="https://github.com/triton-inference-server/server/blob/r20.12/docs/quickstart.md" target="_blank" shape="rect" unselectable="">NVIDIA Triton™ Inference Server Quick
+                           Start</a>.
+                     </p>
+                  </div>
+               </div>
+               <div class="topic concept nested0" id="install" unselectable=""><a name="install" shape="rect" unselectable="" class="">
+                     <!-- --></a><h2 class="title topictitle1" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#install" name="install" shape="rect" unselectable="" class="">2.&nbsp;Installing TensorRT</a></h2>
+                  <div class="body conbody" unselectable="">
+                     <div class="abstract" unselectable=""><span class="shortdesc" unselectable="">There are a number of installation methods for TensorRT. This chapter covers the
+                           most common options using:</span></div>
+                     <div class="p" unselectable=""><a name="install__ul_zcl_jp3_k4b" shape="rect" unselectable="" class="">
+                           <!-- --></a><ul class="ul" id="install__ul_zcl_jp3_k4b" unselectable="">
+                           <li class="li" unselectable=""> a container</li>
+                           <li class="li" unselectable="">a Debian file, or </li>
+                           <li class="li" unselectable="">a standalone <samp class="ph codeph" unselectable="">pip</samp> wheel file. 
+                           </li>
+                        </ul>
+                     </div>
+                     <p class="p" unselectable="">For other ways to install TensorRT, refer to the <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html" target="_blank" shape="rect" unselectable="">NVIDIA TensorRT Installation Guide</a>.
+                     </p>
+                     <p class="p" unselectable="">For advanced users who are already familiar with TensorRT and want to get their
+                        application running quickly, who are using an NVIDIA CUDA<sup unselectable="" class="">®</sup> container
+                        with cuDNN included, or want to set up automation, follow the network repo installation
+                        instructions (refer to <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html#maclearn-net-repo-install" target="_blank" shape="rect" unselectable="">Using The NVIDIA Machine Learning Network Repo For
+                           Debian Installation</a>).
+                     </p>
+                  </div>
+                  <div class="topic concept nested1" id="container-install" unselectable=""><a name="container-install" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#container-install" name="container-install" shape="rect" unselectable="" class="">2.1.&nbsp;Container Installation</a></h3>
+                     <div class="body conbody" unselectable="">
+                        <div class="abstract" unselectable="">This section contains an introduction to the customized virtual machine images (VMI)
+                           that NVIDIA publishes and maintains on a regular basis. NVIDIA NGC™
+                           certified public cloud platform users can access specific setup instructions on how to
+                           browse the <a class="xref" href="http://ngc.nvidia.com/" target="_blank" shape="rect" unselectable="">NGC
+                              website</a> and identify an available NGC container and tag to run on their
+                           VMI. <span class="shortdesc" unselectable=""></span></div>
+                        <p class="p" unselectable="">On each of the major cloud providers, NVIDIA publishes customized GPU-optimized virtual
+                           machine images (VMI) with regular updates to OS and drivers. These VMIs are optimized
+                           for performance on the latest generations of NVIDIA GPUs. Using these VMIs to deploy NGC
+                           hosted containers, models and resources on cloud-hosted virtual machine instances with
+                           H100, A100, V100, or T4 GPUs ensures optimum performance for deep learning, machine
+                           learning, and HPC workloads.
+                        </p>
+                        <p class="p" unselectable="">To deploy a TensorRT container on a public cloud, follow the steps associated with your
+                           <a class="xref" href="https://docs.nvidia.com/ngc/ngc-deploy-public-cloud/index.html" target="_blank" shape="rect" unselectable="">NGC certified public cloud platform</a>.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="topic task nested1" id="installing-debian" unselectable=""><a name="installing-debian" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#installing-debian" name="installing-debian" shape="rect" unselectable="" class="">2.2.&nbsp;Debian Installation</a></h3>
+                     <div class="body taskbody" unselectable="">
+                        <div class="abstract" unselectable=""><span class="shortdesc" unselectable="">This section contains instructions for a developer installation. This
+                              installation method is for new users or users who want the complete developer
+                              installation, including samples and documentation for both the C++ and Python
+                              APIs.</span></div>
+                        <div class="section context" id="installing-debian__context_hsh_krj_bmb" unselectable=""><a name="installing-debian__context_hsh_krj_bmb" shape="rect" unselectable="" class="">
+                              <!-- --></a><p class="p" unselectable="">For advanced users who are already familiar with TensorRT and want to get their
+                              application running quickly, are using an NVIDIA CUDA container with cuDNN included,
+                              or want to set up automation, follow the network repo installation instructions
+                              (refer to <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html#maclearn-net-repo-install" target="_blank" shape="rect" unselectable="">Using The NVIDIA CUDA Network Repo For Debian
+                                 Installation</a>).
+                           </p>
+                           <div class="note note" unselectable=""><span class="notetitle" unselectable="">Note:</span><a name="installing-debian__ul_ldm_cml_nrb" shape="rect" unselectable="" class="">
+                                 <!-- --></a><ul class="ul" id="installing-debian__ul_ldm_cml_nrb" unselectable="">
+                                 <li class="li" unselectable="">The following commands are examples for <samp class="ph codeph" unselectable="">amd64</samp>, however, the
+                                    commands are identical for <samp class="ph codeph" unselectable="">arm64</samp>.
+                                 </li>
+                                 <li class="li" unselectable="">When installing Python packages using this method, you must install
+                                    dependencies manually with <samp class="ph codeph" unselectable="">pip</samp>.
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="section prereq p" id="installing-debian__prereq_t2y_3nf_5vb" unselectable=""><a name="installing-debian__prereq_t2y_3nf_5vb" shape="rect" unselectable="" class="">
+                              <!-- --></a><div class="p" unselectable="">Ensure that you have the following dependencies installed. <a name="installing-debian__ul_u2y_3nf_5vb" shape="rect" unselectable="" class="">
+                                 <!-- --></a><ul class="ul" id="installing-debian__ul_u2y_3nf_5vb" unselectable="">
+                                 <li class="li liexpand" unselectable="">CUDA <a class="xref" href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect" unselectable="">11.0 update 1</a>, <a class="xref" href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect" unselectable="">11.1 update 1</a>, <a class="xref" href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect" unselectable="">11.2 update 2</a>, <a class="xref" href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect" unselectable="">11.3 update 1</a>, <a class="xref" href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect" unselectable="">11.4 update 4</a>, <a class="xref" href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect" unselectable="">11.5 update 2</a>, <a class="xref" href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect" unselectable="">11.6 update 2</a>, <a class="xref" href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect" unselectable="">11.7 update 1</a>, <a class="xref" href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect" unselectable="">11.8</a>, <a class="xref" href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect" unselectable="">12.0 update 1</a>, or <a class="xref" href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" shape="rect" unselectable="">12.1 update 1</a></li>
+                                 <li class="li liexpand" unselectable=""><a class="xref" href="https://docs.nvidia.com/deeplearning/cudnn/release-notes/rel_8.html#rel-890" target="_blank" shape="rect" unselectable="">cuDNN 8.9.0</a> (Not required for lean
+                                    or dispatch runtime installations.)
+                                 </li>
+                              </ul>
+                           </div>
+                        </div><a name="installing-debian__steps_llb_lql_n1b" shape="rect" unselectable="" class="">
+                           <!-- --></a><ol class="ol steps" id="installing-debian__steps_llb_lql_n1b" unselectable="">
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Install CUDA according to the <a class="xref" href="https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html" target="_blank" shape="rect" unselectable="">CUDA installation</a> instructions. </span></li>
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">If applicable, install cuDNN according to the <a class="xref" href="https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html" target="_blank" shape="rect" unselectable="">cuDNN installation</a> instructions.</span></li>
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable=""><a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html#downloading" target="_blank" shape="rect" unselectable="">Download</a> the TensorRT local repo file
+                                 that matches the Ubuntu version and CPU architecture that you are using.</span></li>
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Install TensorRT from the Debian local repo package. Replace
+                                 <samp class="ph codeph" unselectable="">ubuntuxx04</samp>, <samp class="ph codeph" unselectable="">8.x.x</samp>, and
+                                 <samp class="ph codeph" unselectable="">cuda-x.x</samp> with your specific OS version, TensorRT version,
+                                 and CUDA version.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">os="ubuntuxx04"
+tag="8.x.x-cuda-x.x"
+sudo dpkg -i nv-tensorrt-local-repo-${os}-${tag}_1.0-1_amd64.deb
+sudo cp /var/nv-tensorrt-local-repo-${os}-${tag}/*-keyring.gpg /usr/share/keyrings/
+sudo apt-get update
+</kbd></pre><dl class="dl" unselectable="">
+                                 <dt class="dt dlterm" unselectable="">For full runtime</dt>
+                                 <dd class="dd" unselectable=""><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">sudo apt-get install tensorrt</kbd></pre></dd>
+                                 <dt class="dt dlterm" unselectable="">For the lean runtime only, instead of <samp class="ph codeph" unselectable="">tensorrt</samp></dt>
+                                 <dd class="dd" unselectable=""><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">sudo apt-get install libnvinfer-lean8
+sudo apt-get install libnvinfer-vc-plugin8</kbd></pre></dd>
+                                 <dt class="dt dlterm" unselectable="">For lean runtime Python package</dt>
+                                 <dd class="dd" unselectable=""><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">sudo apt-get install python3-libnvinfer-lean</kbd></pre></dd>
+                                 <dt class="dt dlterm" unselectable="">For dispatch runtime Python package</dt>
+                                 <dd class="dd" unselectable=""><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">sudo apt-get install python3-libnvinfer-dispatch</kbd></pre></dd>
+                                 <dt class="dt dlterm" unselectable="">For all TensorRT Python packages</dt>
+                                 <dd class="dd" unselectable=""><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">python3 -m pip install numpy
+sudo apt-get install python3-libnvinfer-dev
+</kbd></pre><div class="p" unselectable="">The following additional packages will be installed:
+                                       <pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">python3-libnvinfer
+python3-libnvinfer-lean
+python3-libnvinfer-dispatch
+</kbd></pre></div>
+                                    <p class="p" unselectable="">If you want to install Python packages for the lean or dispatch
+                                       runtime <em class="ph i" unselectable="">only</em>, specify these individually rather than
+                                       installing the <samp class="ph codeph" unselectable="">dev</samp> package.
+                                    </p>
+                                 </dd>
+                                 <dt class="dt dlterm" unselectable="">If you want to use TensorRT with the UFF converter to convert models
+                                    from TensorFlow
+                                 </dt>
+                                 <dd class="dd" unselectable=""><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">python3 -m pip install protobuf
+sudo apt-get install uff-converter-tf</kbd></pre><p class="p" unselectable="">The <samp class="ph codeph" unselectable="">graphsurgeon-tf</samp> package will also be
+                                       installed with this command.
+                                    </p>
+                                 </dd>
+                                 <dt class="dt dlterm" unselectable="">If you want to run samples that require
+                                    <samp class="ph codeph" unselectable="">onnx-graphsurgeon</samp> or use the Python module for
+                                    your own project
+                                 </dt>
+                                 <dd class="dd" unselectable=""><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">python3 -m pip install numpy onnx
+sudo apt-get install onnx-graphsurgeon</kbd></pre></dd>
+                              </dl>
+                           </li>
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Verify the installation.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">dpkg-query -W tensorrt</kbd></pre><div class="p" unselectable="">You should see something similar to the
+                                 following:<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">tensorrt	8.6.1.x-1+cuda12.0</kbd></pre></div>
+                           </li>
+                        </ol>
+                     </div>
+                  </div>
+                  <div class="topic task nested1" id="installing-pip" unselectable=""><a name="installing-pip" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#installing-pip" name="installing-pip" shape="rect" unselectable="" class="">2.3.&nbsp;Python Package Index Installation</a></h3>
+                     <div class="body taskbody" unselectable="">
+                        <div class="abstract" unselectable=""><span class="shortdesc" unselectable="">This section contains instructions for installing TensorRT from the Python
+                              Package Index.</span></div>
+                        <div class="section context" id="installing-pip__context_exr_phg_scb" unselectable=""><a name="installing-pip__context_exr_phg_scb" shape="rect" unselectable="" class="">
+                              <!-- --></a><p class="p" unselectable="">When installing TensorRT from the Python Package Index, you’re not required to
+                              install TensorRT from a <samp class="ph codeph" unselectable="">.tar</samp>, <samp class="ph codeph" unselectable="">.deb</samp>, or
+                              <samp class="ph codeph" unselectable="">.rpm</samp> package. All required libraries are included in the Python
+                              package. However, the header files, which may be needed if you want to access
+                              TensorRT C++ APIs or to compile plugins written in C++, are not included.
+                              Additionally, if you already have the TensorRT C++ library installed, using the
+                              Python package index version will install a redundant copy of this library, which
+                              may not be desirable. Refer to <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html#installing-tar" target="_blank" shape="rect" unselectable="">Tar File Installation</a> for information on how to manually
+                              install TensorRT wheels that do not bundle the C++ libraries. You can stop after
+                              this section if you only need Python support. 
+                           </p>
+                           <div class="p" unselectable="">The <samp class="ph codeph" unselectable="">tensorrt</samp> Python wheel files only support Python versions 3.6 to
+                              3.11 at this time and will not work with other Python versions. Only the Linux
+                              operating system and x86_64 CPU architecture is currently supported. These Python
+                              wheel files are expected to work on CentOS 7 or newer and Ubuntu 18.04 or newer.
+                              While the tar file installation supports multiple CUDA versions, the Python Package
+                              Index installation does not and only supports CUDA 12.x in this release. 
+                              <div class="note note" unselectable=""><span class="notetitle" unselectable="">Note:</span> If
+                                 you do not have root access, you are running outside a Python virtual
+                                 environment, or for any other reason you would prefer a user installation, then
+                                 append <samp class="ph codeph" unselectable="">--user</samp> to any of the <samp class="ph codeph" unselectable="">pip</samp> commands
+                                 provided.
+                              </div>
+                           </div>
+                        </div><a name="installing-pip__steps_kd1_45l_n1b" shape="rect" unselectable="" class="">
+                           <!-- --></a><ol class="ol steps" id="installing-pip__steps_kd1_45l_n1b" unselectable="">
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Install the TensorRT Python wheel.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">python3 -m pip install --upgrade tensorrt</kbd></pre><p class="p" unselectable="">The above <samp class="ph codeph" unselectable="">pip</samp> command will pull in all the required CUDA
+                                 libraries and cuDNN in Python wheel format from PyPI because they are
+                                 dependencies of the TensorRT Python wheel. Also, it will upgrade
+                                 <samp class="ph codeph" unselectable="">tensorrt</samp> to the latest version if you had a previous
+                                 version installed.
+                              </p>
+                              <div class="p" unselectable="">A TensorRT Python Package Index installation is split into multiple
+                                 modules:<a name="installing-pip__ul_zrl_bbh_hxb" shape="rect" unselectable="" class="">
+                                    <!-- --></a><ul class="ul" id="installing-pip__ul_zrl_bbh_hxb" unselectable="">
+                                    <li class="li" unselectable="">TensorRT libraries (<samp class="ph codeph" unselectable="">tensorrt_libs</samp>)
+                                    </li>
+                                    <li class="li" unselectable="">Python bindings matching the Python version in use
+                                       (<samp class="ph codeph" unselectable="">tensorrt_bindings</samp>)
+                                    </li>
+                                    <li class="li" unselectable="">Frontend source package, which pulls in the correct version of
+                                       dependent TensorRT modules from pypi.nvidia.com
+                                       (<samp class="ph codeph" unselectable="">tensorrt</samp>)
+                                    </li>
+                                 </ul>
+                              </div>
+                              <div class="p" unselectable="">Optionally, install the TensorRT lean or dispatch runtime wheels, which are
+                                 similarly split into multiple Python modules. If you are only using TensorRT
+                                 to run pre-built version compatible engines, you can install these wheels
+                                 without installing the regular TensorRT
+                                 wheel.<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">python3 -m pip install --upgrade tensorrt_lean
+python3 -m pip install --upgrade tensorrt_dispatch
+</kbd></pre></div>
+                           </li>
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">To verify that your installation is working, use the following Python commands
+                                 to:</span><div class="p" unselectable=""><a name="installing-pip__ul_a4t_qps_jnb" shape="rect" unselectable="" class="">
+                                    <!-- --></a><ul class="ul" id="installing-pip__ul_a4t_qps_jnb" unselectable="">
+                                    <li class="li" unselectable="">Import the <samp class="ph codeph" unselectable="">tensorrt</samp> Python module.
+                                    </li>
+                                    <li class="li" unselectable="">Confirm that the correct version of TensorRT has been
+                                       installed.
+                                    </li>
+                                    <li class="li" unselectable="">Create a <samp class="ph codeph" unselectable="">Builder</samp> object to verify that your CUDA
+                                       installation is working.
+                                    </li>
+                                 </ul><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">python3
+&gt;&gt;&gt; import tensorrt
+&gt;&gt;&gt; print(tensorrt.__version__)
+&gt;&gt;&gt; assert tensorrt.Builder(tensorrt.Logger())
+</kbd></pre></div>
+                              <div class="p" unselectable="">Use a similar procedure to verify that the lean and dispatch modules work as
+                                 expected:<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">python3
+&gt;&gt;&gt; import tensorrt_lean as trt
+&gt;&gt;&gt; print(trt.__version__)
+&gt;&gt;&gt; assert trt.Builder(trt.Logger())
+
+python3
+&gt;&gt;&gt; import tensorrt_dispatch as trt
+&gt;&gt;&gt; print(trt.__version__)
+&gt;&gt;&gt; assert trt.Builder(trt.Logger())
+</kbd></pre></div>
+                              <div class="p" unselectable="">If the final Python command fails with an error message similar to the error
+                                 message below, then you may not have the <a class="xref" href="https://docs.nvidia.com/datacenter/tesla/tesla-installation-notes/index.html" target="_blank" shape="rect" unselectable="">NVIDIA driver installed</a> or the
+                                 NVIDIA driver may not be working properly. If you are running inside a
+                                 container, then try starting from one of the
+                                 <samp class="ph codeph" unselectable="">nvidia/cuda:x.y-base-&lt;os&gt;</samp>
+                                 containers.<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">[TensorRT] ERROR: CUDA initialization failure with error 100. Please check your CUDA installation: ...</kbd></pre></div>
+                              <p class="p" unselectable="">If the preceding Python commands worked, then you should now be able to run
+                                 any of the TensorRT Python samples to further confirm that your TensorRT
+                                 installation is working. For more information about TensorRT samples, refer
+                                 to the <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/sample-support-guide/index.html" target="_blank" shape="rect" unselectable="">NVIDIA TensorRT Sample Support
+                                    Guide</a>.
+                              </p>
+                           </li>
+                        </ol>
+                     </div>
+                  </div>
+               </div>
+               
+               <div class="topic concept nested0" id="ex-deploy-onnx" unselectable=""><a name="ex-deploy-onnx" shape="rect" unselectable="" class="">
+                     <!-- --></a><h2 class="title topictitle1" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#ex-deploy-onnx" name="ex-deploy-onnx" shape="rect" unselectable="" class="">4.&nbsp;Example Deployment Using ONNX</a></h2>
+                  <div class="body conbody" unselectable="">
+                     <div class="abstract" unselectable=""><span class="shortdesc" unselectable="">ONNX conversion is generally the most performant way of automatically converting
+                           an ONNX model to a TensorRT engine. In this section, we will walk through the five basic
+                           steps of TensorRT conversion in the context of deploying a pretrained ONNX
+                           model.</span></div>
+                     <p class="p" unselectable="">For this example, we will convert a pretrained ResNet-50 model from the ONNX model zoo
+                        using the ONNX format; a framework-agnostic model format that can be exported from most
+                        major frameworks, including TensorFlow and PyTorch. More information about the ONNX
+                        format can be found <a class="xref" href="https://github.com/onnx/onnx/blob/main/docs/IR.md" target="_blank" shape="rect" unselectable="">here</a>.
+                     </p>
+                     <div class="p" unselectable="">
+                        <div class="fig fignone" id="ex-deploy-onnx__fig_ubw_xbv_f4b" unselectable=""><a name="ex-deploy-onnx__fig_ubw_xbv_f4b" shape="rect" unselectable="" class="">
+                              <!-- --></a><span class="figcap" unselectable="">Figure 5. Deployment Process Using ONNX</span><br clear="none" unselectable="" class=""><br unselectable="" class=""><a name="ex-deploy-onnx__image_tny_hl2_yz" shape="rect" unselectable="" class="">
+                              <!-- --></a><div class="imageleft" unselectable=""><img class="image imageleft" id="ex-deploy-onnx__image_tny_hl2_yz" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/deploy-process-onnx.png" alt="Deployment Process Using ONNX" unselectable=""></div><br clear="none" unselectable="" class=""><br unselectable="" class=""></div>
+                     </div>
+                     <p class="p" unselectable="">After you understand the basic steps of the TensorRT workflow, you can dive into the more
+                        in-depth Jupyter notebooks (refer to the following topics) for using TensorRT using
+                        TF-TRT or ONNX. You can follow along in the introductory Jupyter notebook <a class="xref" href="https://github.com/NVIDIA/TensorRT/tree/main/quickstart/IntroNotebooks/0.%20Running%20This%20Guide.ipynb" target="_blank" shape="rect" unselectable="">here</a>, which covers these workflow steps in
+                        more detail, using the TensorFlow framework.
+                     </p>
+                  </div>
+                  <div class="topic concept nested1" id="save-model" unselectable=""><a name="save-model" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#save-model" name="save-model" shape="rect" unselectable="" class="">4.1.&nbsp;Export the Model</a></h3>
+                     <div class="body conbody" unselectable="">
+                        <div class="abstract" unselectable=""><span class="shortdesc" unselectable="">The two main automatic paths for TensorRT conversion require different model
+                              formats to successfully convert a model:</span></div>
+                        <div class="p" unselectable=""><a name="save-model__ul_g2l_tr3_k4b" shape="rect" unselectable="" class="">
+                              <!-- --></a><ul class="ul" id="save-model__ul_g2l_tr3_k4b" unselectable="">
+                              <li class="li" unselectable="">TF-TRT uses TensorFlow SavedModels.</li>
+                              <li class="li" unselectable="">The ONNX path requires that models are saved in ONNX.</li>
+                           </ul>
+                        </div>
+                        <p class="p" unselectable="">In this example, we are using ONNX, so we need an ONNX model. We are going to use
+                           ResNet-50; a basic backbone vision model that can be used for a variety of purposes. We
+                           will perform classification using a pretrained ResNet-50 ONNX model included with the
+                           <a class="xref" href="https://github.com/onnx/models" target="_blank" shape="rect" unselectable="">ONNX
+                              model zoo</a>.
+                        </p>
+                        <div class="p" unselectable="">Download a pretrained ResNet-50 model from the ONNX model zoo using <samp class="ph codeph" unselectable="">wget</samp>
+                           and untar
+                           it.<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">wget https://download.onnxruntime.ai/onnx/models/resnet50.tar.gz
+tar xzf resnet50.tar.gz
+</kbd></pre></div>
+                        <p class="p" unselectable="">This will unpack a pretrained ResNet-50 <samp class="ph codeph" unselectable="">.onnx</samp> file to the path
+                           <samp class="ph codeph" unselectable="">resnet50/model.onnx</samp>.
+                        </p>
+                        <p class="p" unselectable="">You can see how we export ONNX models that will work with this same deployment workflow
+                           in <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#export-from-tf" shape="rect" unselectable="">Exporting to ONNX from TensorFlow</a> or <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#export-from-pytorch" shape="rect" unselectable="">Exporting to ONNX from PyTorch</a>.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="topic concept nested1" id="batch-sizes" unselectable=""><a name="batch-sizes" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#batch-sizes" name="batch-sizes" shape="rect" unselectable="" class="">4.2.&nbsp;Select a Batch Size</a></h3>
+                     <div class="body conbody" unselectable="">
+                        <div class="abstract" unselectable=""><span class="shortdesc" unselectable="">Batch size can have a large effect on the optimizations TensorRT performs on our
+                              model. Generally speaking, at inference, we pick a small batch size when we want to
+                              prioritize latency and a larger batch size when we want to prioritize throughput. Larger
+                              batches take longer to process but reduce the average time spent on each
+                              sample.</span></div>
+                        <p class="p" unselectable="">TensorRT is capable of handling the batch size dynamically if you do not know until
+                           runtime what batch size you will need. That said, a fixed batch size allows TensorRT to
+                           make additional optimizations. For this example workflow, we use a fixed batch size of
+                           64. For more information on handling dynamic input size, refer to <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#work_dynamic_shapes" target="_blank" shape="rect" unselectable="">dynamic shapes</a>.
+                        </p>
+                        <div class="p" unselectable="">We set the batch size during the original export process to ONNX. This is demonstrated in
+                           the <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#export-from-tf" shape="rect" unselectable="">Exporting to ONNX from TensorFlow</a> or <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#export-from-pytorch" shape="rect" unselectable="">Exporting to ONNX from PyTorch</a> sections.
+                           The sample <samp class="ph codeph" unselectable="">model.onnx</samp> file downloaded from the ONNX model zoo has its
+                           batch size set to 64 already. We will want to remember this when we deploy our
+                           model:<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">BATCH_SIZE=64</kbd></pre></div>
+                        <p class="p" unselectable="">For more information about batch sizes, refer to <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#batching" target="_blank" shape="rect" unselectable="">Batching</a>.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="topic concept nested1" id="precision" unselectable=""><a name="precision" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#precision" name="precision" shape="rect" unselectable="" class="">4.3.&nbsp;Select a Precision</a></h3>
+                     <div class="body conbody" unselectable="">
+                        <div class="abstract" unselectable="">Inference typically requires less numeric precision than training. With some care,
+                           lower precision can give you faster computation and lower memory consumption without
+                           sacrificing any meaningful accuracy. TensorRT supports TF32, FP32, FP16, and INT8
+                           precisions. For more information about precision, refer to <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#reduced-precision" target="_blank" shape="rect" unselectable="">Reduced Precision</a>. <span class="shortdesc" unselectable=""></span></div>
+                        <div class="p" unselectable="">FP32 is the default training precision of most frameworks, so we will start by using FP32
+                           for inference
+                           here.<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">import numpy as np
+PRECISION = np.float32
+</kbd></pre></div>
+                        <p class="p" unselectable="">We set the precision that our TensorRT engine should use at runtime, which we will do in
+                           the next section.
+                        </p>
+                        <p class="p" unselectable="">For more information about precision, refer to <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#reduced-precision" target="_blank" shape="rect" unselectable="">Reduced Precision</a>. For more information about
+                           the <samp class="ph codeph" unselectable="">ONNXClassifierWrapper</samp>, refer to <a class="xref" href="https://github.com/NVIDIA/TensorRT" target="_blank" shape="rect" unselectable="">GitHub:
+                              TensorRT Open Source Software</a>.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="topic concept nested1" id="convert-model" unselectable=""><a name="convert-model" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#convert-model" name="convert-model" shape="rect" unselectable="" class="">4.4.&nbsp;Convert the Model</a></h3>
+                     <div class="body conbody" unselectable="">
+                        <div class="abstract" unselectable=""><span class="shortdesc" unselectable="">The ONNX conversion path is one of the most universal and performant paths for
+                              automatic TensorRT conversion. It works for TensorFlow, PyTorch, and many other
+                              frameworks.</span></div>
+                        <p class="p" unselectable="">There are several tools to help you convert models from ONNX to a TensorRT engine. One
+                           common approach is to use <samp class="ph codeph" unselectable="">trtexec</samp> - a command-line tool included with
+                           TensorRT that can, among other things, convert ONNX models to TensorRT engines and
+                           profile them.
+                        </p>
+                        <div class="p" unselectable="">We can run this conversion as
+                           follows:<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">trtexec --onnx=resnet50/model.onnx --saveEngine=resnet_engine.trt</kbd></pre></div>
+                        <div class="p" unselectable="">This will convert our <samp class="ph codeph" unselectable="">resnet50/model.onnx</samp> to a TensorRT engine named
+                           <samp class="ph codeph" unselectable="">resnet_engine.trt</samp>.
+                           <div class="note note" unselectable=""><span class="notetitle" unselectable="">Note:</span><a name="convert-model__ul_itz_1yp_n4b" shape="rect" unselectable="" class="">
+                                 <!-- --></a><ul class="ul" id="convert-model__ul_itz_1yp_n4b" unselectable="">
+                                 <li class="li liexpand" unselectable="">To tell <samp class="ph codeph" unselectable="">trtexec</samp> where to find our ONNX model,
+                                    run:<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">--onnx=resnet50/model.onnx</kbd></pre></li>
+                                 <li class="li liexpand" unselectable="">To tell <samp class="ph codeph" unselectable="">trtexec</samp> where to save our optimized TensorRT
+                                    engine,
+                                    run:<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">--saveEngine=resnet_engine_intro.trt</kbd></pre></li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="topic concept nested1" id="deploy-engine" unselectable=""><a name="deploy-engine" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#deploy-engine" name="deploy-engine" shape="rect" unselectable="" class="">4.5.&nbsp;Deploy the Model</a></h3>
+                     <div class="body conbody" unselectable="">
+                        <div class="abstract" unselectable=""><span class="shortdesc" unselectable="">After we have our TensorRT engine created successfully, we must decide how to run
+                              it with TensorRT.</span></div>
+                        <p class="p" unselectable="">There are two types of TensorRT runtimes: a standalone runtime that has C++ and Python
+                           bindings, and a native integration into TensorFlow. In this section, we will use a
+                           simplified wrapper (<samp class="ph codeph" unselectable="">ONNXClassifierWrapper</samp>) which calls the standalone
+                           runtime. We will generate a batch of randomized "dummy" data and use our
+                           <samp class="ph codeph" unselectable="">ONNXClassifierWrapper</samp> to run inference on that batch. For more
+                           information on TensorRT runtimes, refer to the <a class="xref" href="https://github.com/NVIDIA/TensorRT/tree/main/quickstart/IntroNotebooks/5.%20Understanding%20TensorRT%20Runtimes.ipynb" target="_blank" shape="rect" unselectable="">Understanding TensorRT Runtimes</a> Jupyter
+                           notebook.
+                        </p>
+                        <div class="p" unselectable=""><a name="deploy-engine__ol_l3h_lbv_f4b" shape="rect" unselectable="" class="">
+                              <!-- --></a><ol class="ol" id="deploy-engine__ol_l3h_lbv_f4b" unselectable="">
+                              <li class="li" unselectable="">Set up the <samp class="ph codeph" unselectable="">ONNXClassifierWrapper</samp> (using the precision we
+                                 determined in <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#precision" shape="rect" unselectable="">Select a Precision</a>).<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">from onnx_helper import ONNXClassifierWrapper
+N_CLASSES = 1000 # Our ResNet-50 is trained on a 1000 class ImageNet task
+trt_model = ONNXClassifierWrapper("resnet_engine.trt", [BATCH_SIZE, N_CLASSES], target_dtype = PRECISION)
+</kbd></pre></li>
+                              <li class="li" unselectable="">Generate a dummy
+                                 batch.<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">BATCH_SIZE=32
+dummy_input_batch = np.zeros((BATCH_SIZE, 224, 224, 3), dtype = PRECISION)</kbd></pre></li>
+                              <li class="li" unselectable="">Feed a batch of data into our engine and get our
+                                 predictions.<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">predictions = trt_model.predict(dummy_input_batch)</kbd></pre></li>
+                           </ol>
+                        </div>
+                        <p class="p" unselectable="">Note that the wrapper does not load and initialize the engine until running the first
+                           batch, so this batch will generally take a while. For more information about batching,
+                           refer to <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#batching" target="_blank" shape="rect" unselectable="">Batching</a>.
+                        </p>
+                        <p class="p" unselectable="">For more information about TensorRT APIs, refer to the <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/api/index.html" target="_blank" shape="rect" unselectable="">NVIDIA TensorRT API Reference</a>. For more information on the
+                           <samp class="ph codeph" unselectable="">ONNXClassifierWrapper</samp>, see its implementation on GitHub <a class="xref" href="https://github.com/NVIDIA/TensorRT/tree/main/quickstart/IntroNotebooks/onnx_helper.py" target="_blank" shape="rect" unselectable="">here</a>.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <div class="topic concept nested0" id="framework-integration" unselectable=""><a name="framework-integration" shape="rect" unselectable="" class="">
+                     <!-- --></a><h2 class="title topictitle1" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#framework-integration" name="framework-integration" shape="rect" unselectable="" class="">5.&nbsp;TF-TRT Framework Integration</a></h2>
+                  <div class="body conbody" unselectable="">
+                     <div class="abstract" unselectable=""><span class="shortdesc" unselectable="">The TF-TRT integration provides a simple and flexible way to get started with
+                           TensorRT. TF-TRT is a high-level Python interface for TensorRT that works directly with
+                           TensorFlow models. It allows you to convert TensorFlow SavedModels to TensorRT optimized
+                           models and run them within Python using a high-level API.</span></div>
+                     <p class="p" unselectable="">TF-TRT provides both a conversion path and a Python runtime that allows you to run an
+                        optimized model the way you would any other TensorFlow model. This has a number of
+                        advantages, notably that TF-TRT is able to convert models that contain a mixture of
+                        supported and unsupported layers without having to create custom plug-ins, by analyzing
+                        the model and passing subgraphs to TensorRT where possible to convert into engines
+                        independently.
+                     </p>
+                     <p class="p" unselectable=""><a class="xref" href="https://github.com/NVIDIA/TensorRT/tree/main/quickstart/IntroNotebooks/2.%20Using%20the%20Tensorflow%20TensorRT%20Integration.ipynb" target="_blank" shape="rect" unselectable="">This notebook</a> provides a basic introduction
+                        and wrapper that simplifies the process of working with basic Keras/TensorFlow 2 models.
+                        In the notebook, we take a pretrained ResNet-50 model from the <a class="xref" href="https://www.tensorflow.org/api_docs/python/tf/keras/applications" target="_blank" shape="rect" unselectable=""><samp class="ph codeph" unselectable="">keras.applications</samp></a> model zoo,
+                        convert it using TF-TRT, and run it in the TF-TRT Python runtime.
+                     </p>
+                     <p class="p" unselectable="">Visually, the TF-TRT notebook demonstrates how to follow this path through TensorRT:</p>
+                     <div class="p" unselectable="">
+                        <div class="fig fignone" id="framework-integration__fig_ubw_xbv_f4b" unselectable=""><a name="framework-integration__fig_ubw_xbv_f4b" shape="rect" unselectable="" class="">
+                              <!-- --></a><span class="figcap" unselectable="">Figure 6. TF-TRT Integration with TensorRT</span><br clear="none" unselectable="" class=""><br unselectable="" class=""><a name="framework-integration__image_tny_hl2_yz" shape="rect" unselectable="" class="">
+                              <!-- --></a><div class="imageleft" unselectable=""><img class="image imageleft" id="framework-integration__image_tny_hl2_yz" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/tf-trt-workflow.png" alt="TF-TRT Integration with TensorRT" unselectable=""></div><br clear="none" unselectable="" class=""><br unselectable="" class=""></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="topic concept nested0" id="onnx-export" unselectable=""><a name="onnx-export" shape="rect" unselectable="" class="">
+                     <!-- --></a><h2 class="title topictitle1" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#onnx-export" name="onnx-export" shape="rect" unselectable="" class="">6.&nbsp;ONNX Conversion and Deployment</a></h2>
+                  <div class="body conbody" unselectable="">
+                     <div class="abstract" unselectable="">The ONNX interchange format provides a way to export models from many frameworks,
+                        including PyTorch, TensorFlow, and TensorFlow 2, for use with the TensorRT runtime.
+                        Importing models using ONNX requires the operators in your model to be supported by ONNX,
+                        and for you to supply plug-in implementations of any operators TensorRT does not support. (A
+                        library of plug-ins for TensorRT can be found <a class="xref" href="https://github.com/NVIDIA/TensorRT/tree/main/plugin" target="_blank" shape="rect" unselectable="">here</a>). <span class="shortdesc" unselectable=""></span></div>
+                     <p class="p" unselectable=""></p>
+                  </div>
+                  <div class="topic concept nested1" id="export-with-onnx" unselectable=""><a name="export-with-onnx" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#export-with-onnx" name="export-with-onnx" shape="rect" unselectable="" class="">6.1.&nbsp;Exporting with ONNX</a></h3>
+                     <div class="body conbody" unselectable="">
+                        <div class="abstract" unselectable="">ONNX models can be easily generated from TensorFlow models using the ONNX project's
+                           <a class="xref" href="https://pypi.org/project/tf2onnx/" target="_blank" shape="rect" unselectable=""><samp class="ph codeph" unselectable="">tf2onnx</samp></a> tool. <span class="shortdesc" unselectable=""></span></div>
+                        <p class="p" unselectable=""><a class="xref" href="https://github.com/NVIDIA/TensorRT/tree/main/quickstart/IntroNotebooks/3.%20Using%20Tensorflow%202%20through%20ONNX.ipynb" target="_blank" shape="rect" unselectable="">This notebook</a> shows how to generate ONNX
+                           models from a Keras/TF2 ResNet-50 model, how to convert those ONNX models to TensorRT
+                           engines using <samp class="ph codeph" unselectable="">trtexec</samp>, and how to use the Python TensorRT runtime to
+                           feed a batch of data into the TensorRT engine at inference time.
+                        </p>
+                     </div>
+                     <div class="topic task nested2" id="export-from-tf" unselectable=""><a name="export-from-tf" shape="rect" unselectable="" class="">
+                           <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#export-from-tf" name="export-from-tf" shape="rect" unselectable="" class="">6.1.1.&nbsp;Exporting to ONNX from TensorFlow</a></h3>
+                        <div class="body taskbody" unselectable="">
+                           <div class="abstract" unselectable="">
+                              <p class="p" unselectable="">TensorFlow can be exported through ONNX and run in one of our TensorRT runtimes. Here, we
+                                 provide the steps needed to export an ONNX model from TensorFlow. For more information,
+                                 refer to the <a class="xref" href="https://github.com/NVIDIA/TensorRT/tree/main/quickstart/IntroNotebooks/3.%20Using%20Tensorflow%202%20through%20ONNX.ipynb" target="_blank" shape="rect" unselectable="">Using Tensorflow 2 through ONNX</a> notebook. The
+                                 notebook will walk you through this path, starting from the below export steps:
+                              </p>
+                              <div class="shortdesc" unselectable=""></div>
+                           </div>
+                           <div class="section context" id="export-from-tf__context_n1n_cgq_n4b" unselectable=""><a name="export-from-tf__context_n1n_cgq_n4b" shape="rect" unselectable="" class="">
+                                 <!-- --></a><div class="p" unselectable="">
+                                 <div class="fig fignone" id="export-from-tf__fig_ubw_xbv_f4b" unselectable=""><a name="export-from-tf__fig_ubw_xbv_f4b" shape="rect" unselectable="" class="">
+                                       <!-- --></a><span class="figcap" unselectable="">Figure 7. Exporting ONNX from TensorFlow</span><br clear="none" unselectable="" class=""><br unselectable="" class=""><a name="export-from-tf__image_tny_hl2_yz" shape="rect" unselectable="" class="">
+                                       <!-- --></a><div class="imageleft" unselectable=""><img class="image imageleft" id="export-from-tf__image_tny_hl2_yz" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/export-onnx-tf.png" alt="Exporting ONNX from TensorFlow" unselectable=""></div><br clear="none" unselectable="" class=""><br unselectable="" class=""></div>
+                              </div>
+                           </div>
+                           <ol class="ol steps" unselectable="">
+                              <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Import a ResNet-50 model from <samp class="ph codeph" unselectable="">keras.applications</samp>. This will
+                                    load a copy of ResNet-50 with pretrained weights.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">from tensorflow.keras.applications import ResNet50
+
+model = ResNet50(weights='imagenet')
+</kbd></pre></li>
+                              <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Convert the ResNet-50 model to ONNX format.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">import tf2onnx
+
+model.save('my_model')
+!python -m tf2onnx.convert --saved-model my_model --output temp.onnx
+onnx_model = onnx.load_model('temp.onnx')
+</kbd></pre></li>
+                              <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Set an explicit batch size in the ONNX file.</span><div class="note note" unselectable=""><span class="notetitle" unselectable="">Note:</span><p class="p" unselectable="">By default, TensorFlow does not set an explicit batch size.</p>
+                                 </div><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">import onnx
+
+BATCH_SIZE = 64
+inputs = onnx_model.graph.input
+for input in inputs:
+    dim1 = input.type.tensor_type.shape.dim[0]
+    dim1.dim_value = BATCH_SIZE
+</kbd></pre></li>
+                              <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Save the ONNX file.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">model_name = "resnet50_onnx_model.onnx"
+onnx.save_model(onnx_model, model_name)
+</kbd></pre></li>
+                           </ol>
+                        </div>
+                     </div>
+                     <div class="topic task nested2" id="export-from-pytorch" unselectable=""><a name="export-from-pytorch" shape="rect" unselectable="" class="">
+                           <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#export-from-pytorch" name="export-from-pytorch" shape="rect" unselectable="" class="">6.1.2.&nbsp;Exporting to ONNX from PyTorch</a></h3>
+                        <div class="body taskbody" unselectable="">
+                           <div class="abstract" unselectable="">One approach to converting a PyTorch model to TensorRT is to export a PyTorch model to
+                              ONNX and then convert into a TensorRT engine. For more details, refer to  <a class="xref" href="https://github.com/NVIDIA/TensorRT/tree/main/quickstart/IntroNotebooks/4.%20Using%20PyTorch%20through%20ONNX.ipynb" target="_blank" shape="rect" unselectable="">Using PyTorch with TensorRT through ONNX</a>. The
+                              notebook will walk you through this path, starting from the below export
+                              steps: <span class="shortdesc" unselectable=""></span></div>
+                           <div class="section context" id="export-from-pytorch__context_n1n_cgq_n4b" unselectable=""><a name="export-from-pytorch__context_n1n_cgq_n4b" shape="rect" unselectable="" class="">
+                                 <!-- --></a><div class="p" unselectable="">
+                                 <div class="fig fignone" id="export-from-pytorch__fig_ubw_xbv_f4b" unselectable=""><a name="export-from-pytorch__fig_ubw_xbv_f4b" shape="rect" unselectable="" class="">
+                                       <!-- --></a><span class="figcap" unselectable="">Figure 8. Exporting ONNX from PyTorch</span><br clear="none" unselectable="" class=""><br unselectable="" class=""><a name="export-from-pytorch__image_tny_hl2_yz" shape="rect" unselectable="" class="">
+                                       <!-- --></a><div class="imageleft" unselectable=""><img class="image imageleft" id="export-from-pytorch__image_tny_hl2_yz" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/export-onnx-pytorch.png" alt="Exporting ONNX from PyTorch" unselectable=""></div><br clear="none" unselectable="" class=""><br unselectable="" class=""></div>
+                              </div>
+                           </div><a name="export-from-pytorch__steps_p1m_xdv_f4b" shape="rect" unselectable="" class="">
+                              <!-- --></a><ol class="ol steps" id="export-from-pytorch__steps_p1m_xdv_f4b" unselectable="">
+                              <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Import a ResNet-50 model from <samp class="ph codeph" unselectable="">torchvision</samp>. This will load a
+                                    copy of ResNet-50 with pretrained weights.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">import torchvision.models as models
+
+resnext50_32x4d = models.resnext50_32x4d(pretrained=True)
+</kbd></pre></li>
+                              <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Save the ONNX file from PyTorch.</span><div class="note note" unselectable=""><span class="notetitle" unselectable="">Note:</span> We need a batch of data to save our ONNX file from PyTorch. We will use a
+                                    dummy batch.
+                                 </div><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">import torch
+
+BATCH_SIZE = 64
+dummy_input=torch.randn(BATCH_SIZE, 3, 224, 224)
+</kbd></pre></li>
+                              <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Save the ONNX file.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">import torch.onnx
+torch.onnx.export(resnext50_32x4d, dummy_input, "resnet50_onnx_model.onnx", verbose=False)</kbd></pre></li>
+                           </ol>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="topic concept nested1" id="convert-onnx-engine" unselectable=""><a name="convert-onnx-engine" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#convert-onnx-engine" name="convert-onnx-engine" shape="rect" unselectable="" class="">6.2.&nbsp;Converting ONNX to a TensorRT Engine</a></h3>
+                     <div class="body conbody" unselectable="">
+                        <div class="abstract" unselectable=""><span class="shortdesc" unselectable="">There are two main ways of converting ONNX files to TensorRT engines:</span></div>
+                        <div class="p" unselectable=""><a name="convert-onnx-engine__ul_vqd_jhq_n4b" shape="rect" unselectable="" class="">
+                              <!-- --></a><ul class="ul" id="convert-onnx-engine__ul_vqd_jhq_n4b" unselectable="">
+                              <li class="li" unselectable="">using <samp class="ph codeph" unselectable="">trtexec</samp></li>
+                              <li class="li" unselectable="">using the TensorRT API</li>
+                           </ul>
+                        </div>
+                        <div class="p" unselectable="">In this guide, we will focus on using <samp class="ph codeph" unselectable="">trtexec</samp>. To convert one of the
+                           preceding ONNX models to a TensorRT engine using <samp class="ph codeph" unselectable="">trtexec</samp>, we can run
+                           this conversion as
+                           follows:<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">trtexec --onnx=resnet50_onnx_model.onnx --saveEngine=resnet_engine.trt</kbd></pre></div>
+                        <p class="p" unselectable="">This will convert our <samp class="ph codeph" unselectable="">resnet50_onnx_model.onnx</samp> to a TensorRT engine
+                           named <samp class="ph codeph" unselectable="">resnet_engine.trt</samp>.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="topic concept nested1" id="deploy-engine-python" unselectable=""><a name="deploy-engine-python" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#deploy-engine-python" name="deploy-engine-python" shape="rect" unselectable="" class="">6.3.&nbsp;Deploying a TensorRT Engine to the Python Runtime API</a></h3>
+                     <div class="body conbody" unselectable="">
+                        <div class="abstract" unselectable=""><span class="shortdesc" unselectable="">There are a number of runtimes available to target with TensorRT. When
+                              performance is important, the TensorRT API is a great way of running ONNX models. We
+                              will go into the deployment of a more complex ONNX model using the TensorRT runtime API
+                              in both C++ and Python in the following section.</span></div>
+                        <p class="p" unselectable="">For the purposes of the preceding model, you can see how to deploy it in Jupyter with the
+                           Python runtime API in the notebooks <a class="xref" href="https://github.com/NVIDIA/TensorRT/tree/main/quickstart/IntroNotebooks/3.%20Using%20Tensorflow%202%20through%20ONNX.ipynb" target="_blank" shape="rect" unselectable="">Using Tensorflow 2 through ONNX</a> and <a class="xref" href="https://github.com/NVIDIA/TensorRT/tree/main/quickstart/IntroNotebooks/4.%20Using%20PyTorch%20through%20ONNX.ipynb" target="_blank" shape="rect" unselectable="">Using PyTorch through ONNX</a>. Another simple
+                           option is to use the <samp class="ph codeph" unselectable="">ONNXClassifierWrapper</samp> provided with this guide, as
+                           demonstrated in <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#deploy-engine" title="After we have our TensorRT engine created successfully, we must decide how to run it with TensorRT." shape="rect" unselectable="">Deploy the Model</a>.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <div class="topic concept nested0" id="runtime" unselectable=""><a name="runtime" shape="rect" unselectable="" class="">
+                     <!-- --></a><h2 class="title topictitle1" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#runtime" name="runtime" shape="rect" unselectable="" class="">7.&nbsp;Using the TensorRT Runtime API</a></h2>
+                  <div class="body conbody" unselectable="">
+                     <div class="abstract" unselectable=""><span class="shortdesc" unselectable="">One of the most performant and customizable options for both model conversion and
+                           deployment are to use the TensorRT API, which has both C++ and Python
+                           bindings.</span></div>
+                     <p class="p" unselectable="">TensorRT includes a standalone runtime with C++ and Python bindings, which are generally
+                        more performant and more customizable than using the TF-TRT integration and running in
+                        TensorFlow. The C++ API has lower overhead, but the Python API works well with Python
+                        data loaders and libraries like NumPy and SciPy, and is easier to use for prototyping,
+                        debugging and testing.
+                     </p>
+                     <p class="p" unselectable="">The following tutorial illustrates semantic segmentation of images using the TensorRT C++
+                        and Python API. A fully convolutional model with ResNet-101 backbone is used for this
+                        task. The model accepts images of arbitrary sizes and produces per-pixel
+                        predictions.
+                     </p>
+                     <div class="p" unselectable="">The tutorial consists of the following steps:<a name="runtime__ol_jyv_qnw_f4b" shape="rect" unselectable="" class="">
+                           <!-- --></a><ol class="ol" id="runtime__ol_jyv_qnw_f4b" unselectable="">
+                           <li class="li" unselectable="">Setup–launch the test container, and generate the TensorRT engine from a PyTorch
+                              model exported to ONNX and converted using <samp class="ph codeph" unselectable="">trtexec</samp></li>
+                           <li class="li" unselectable="">C++ runtime API–run inference using engine and TensorRT’s C++ API</li>
+                           <li class="li" unselectable="">Python runtime AP–run inference using engine and TensorRT’s Python API</li>
+                        </ol>
+                     </div>
+                  </div>
+                  <div class="topic task nested1" id="container-and-engine" unselectable=""><a name="container-and-engine" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#container-and-engine" name="container-and-engine" shape="rect" unselectable="" class="">7.1.&nbsp;Setting Up the Test Container and Building the TensorRT Engine</a></h3>
+                     <div class="body taskbody" unselectable="">
+                        <div class="abstract" unselectable=""><span class="shortdesc" unselectable=""></span></div><a name="container-and-engine__steps_pq5_14w_f4b" shape="rect" unselectable="" class="">
+                           <!-- --></a><ol class="ol steps" id="container-and-engine__steps_pq5_14w_f4b" unselectable="">
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Download the source code for this quick start tutorial from the <a class="xref" href="http://github.com/NVIDIA/TensorRT" target="_blank" shape="rect" unselectable="">TensorRT Open Source Software repository</a>.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">$ git clone https://github.com/NVIDIA/TensorRT.git
+$ cd TensorRT/quickstart
+</kbd></pre></li>
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Convert a <a class="xref" href="https://pytorch.org/hub/pytorch_vision_fcn_resnet101/" target="_blank" shape="rect" unselectable="">pre-trained FCN-ResNet-101</a> model from
+                                 <samp class="ph codeph" unselectable="">torch.hub</samp> to ONNX.</span><p class="p" unselectable="">Here we use the export script that is included with the tutorial to generate
+                                 an ONNX model and save it to <samp class="ph codeph" unselectable="">fcn-resnet101.onnx</samp>. For
+                                 details on ONNX conversion refer to <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#onnx-export" shape="rect" unselectable="">ONNX Conversion and Deployment</a>. The script
+                                 also generates a <a class="xref" href="https://pytorch.org/assets/images/deeplab1.png" target="_blank" shape="rect" unselectable="">test image</a> of size 1282x1026 and
+                                 saves it to <samp class="ph codeph" unselectable="">input.ppm</samp>.
+                              </p>
+                              <div class="p" unselectable="">
+                                 <div class="fig fignone" id="container-and-engine__fig_ubw_xbv_f4b" unselectable=""><a name="container-and-engine__fig_ubw_xbv_f4b" shape="rect" unselectable="" class="">
+                                       <!-- --></a><span class="figcap" unselectable="">Figure 9. Test Image, Size 1282x1026</span><br clear="none" unselectable="" class=""><br unselectable="" class=""><a name="container-and-engine__image_tny_hl2_yz" shape="rect" unselectable="" class="">
+                                       <!-- --></a><div class="imageleft" unselectable=""><img class="image imageleft" id="container-and-engine__image_tny_hl2_yz" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/test-container.PNG" alt="Test Image, Size 1282x1026" unselectable=""></div><br clear="none" unselectable="" class=""><br unselectable="" class=""></div>
+                              </div><a name="container-and-engine__substeps_j5p_y4w_f4b" shape="rect" unselectable="" class="">
+                                 <!-- --></a><ol type="a" class="ol substeps" id="container-and-engine__substeps_j5p_y4w_f4b" unselectable="">
+                                 <li class="li substep" unselectable=""><span class="ph cmd" unselectable="">Launch the NVIDIA PyTorch container for running the export
+                                       script.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">$ docker run --rm -it --gpus all -p 8888:8888 -v `pwd`:/workspace -w /workspace/SemanticSegmentation nvcr.io/nvidia/pytorch:20.12-py3 bash</kbd></pre></li>
+                                 <li class="li substep" unselectable=""><span class="ph cmd" unselectable="">Run the export script to convert the pretrained model to ONNX.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">$ python export.py</kbd></pre><div class="note note" unselectable=""><span class="notetitle" unselectable="">Note:</span> FCN-ResNet-101 has one input of dimension <samp class="ph codeph" unselectable="">[batch, 3,
+                                          height, width]</samp> and one output of dimension
+                                       <samp class="ph codeph" unselectable="">[batch, 21, height, weight]</samp> containing
+                                       unnormalized probabilities corresponding to predictions for 21 class
+                                       labels. When exporting the model to ONNX, we append an
+                                       <samp class="ph codeph" unselectable="">argmax</samp> layer at the output to produce per-pixel
+                                       class labels of highest probability.
+                                    </div>
+                                 </li>
+                              </ol>
+                           </li>
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Build a TensorRT engine from ONNX using the <a class="xref" href="https://github.com/NVIDIA/TensorRT/tree/main/samples/trtexec" target="_blank" shape="rect" unselectable=""><samp class="ph codeph" unselectable="">trtexec</samp></a> tool.</span><p class="p" unselectable=""><samp class="ph codeph" unselectable="">trtexec</samp> can generate a TensorRT engine from an ONNX model
+                                 that can then be deployed using the TensorRT runtime API. It leverages the
+                                 <a class="xref" href="https://github.com/onnx/onnx-tensorrt" target="_blank" shape="rect" unselectable="">TensorRT ONNX parser</a> to load the ONNX model into
+                                 a TensorRT network graph, and the TensorRT <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#build_engine_c" target="_blank" shape="rect" unselectable="">Builder API</a> to generate an
+                                 optimized engine. Building an engine can be time-consuming, and is usually
+                                 performed offline.
+                              </p>
+                              <div class="p" unselectable="">Building an engine can be time-consuming, and is usually performed
+                                 offline.<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">trtexec --onnx=fcn-resnet101.onnx --fp16 --workspace=64 --minShapes=input:1x3x256x256 --optShapes=input:1x3x1026x1282 --maxShapes=input:1x3x1440x2560 --buildOnly --saveEngine=fcn-resnet101.engine</kbd></pre></div>
+                              <p class="p" unselectable="">Successful execution should result in an engine file being generated and see
+                                 something similar to <samp class="ph codeph" unselectable="">Successful</samp> in the command output.
+                              </p>
+                              <p class="p" unselectable=""><samp class="ph codeph" unselectable="">trtexec</samp> can build TensorRT engines with the build
+                                 configuration options as described in the <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#trtexec-flags" target="_blank" shape="rect" unselectable="">NVIDIA TensorRT Developer
+                                    Guide</a>.
+                              </p>
+                           </li>
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Optionally, validate the generated engine for random-valued input using
+                                 <samp class="ph codeph" unselectable="">trtexec</samp>.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">trtexec --shapes=input:1x3x1026x1282 --loadEngine=fcn-resnet101.engine</kbd></pre><p class="p" unselectable="">Where <samp class="ph codeph" unselectable="">--shapes</samp> sets the input sizes for the dynamic shaped
+                                 inputs to be used for inference.
+                              </p>
+                              <div class="p" unselectable="">If successful, you should see something similar to the
+                                 following:<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">&amp;&amp;&amp;&amp; PASSED TensorRT.trtexec # trtexec --shapes=input:1x3x1026x1282 --loadEngine=fcn-resnet101.engine</kbd></pre></div>
+                           </li>
+                        </ol>
+                     </div>
+                  </div>
+                  <div class="topic task nested1" id="run-engine-c" unselectable=""><a name="run-engine-c" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#run-engine-c" name="run-engine-c" shape="rect" unselectable="" class="">7.2.&nbsp;Running an Engine in C++</a></h3>
+                     <div class="body taskbody" unselectable="">
+                        <div class="abstract" unselectable=""><span class="shortdesc" unselectable=""></span></div>
+                        <div class="section" id="run-engine-c__section_ehw_jsw_f4b" unselectable=""><a name="run-engine-c__section_ehw_jsw_f4b" shape="rect" unselectable="" class="">
+                              <!-- --></a><div class="p" unselectable=""><a name="run-engine-c__ol_r1t_pqw_f4b" shape="rect" unselectable="" class="">
+                                 <!-- --></a><ol class="ol" id="run-engine-c__ol_r1t_pqw_f4b" unselectable="">
+                                 <li class="li" unselectable="">Compile and run the C++ segmentation tutorial within the test
+                                    container.<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">$ make
+$ ./bin/segmentation_tutorial
+</kbd></pre></li>
+                              </ol>
+                           </div>
+                           <p class="p" unselectable="">The following steps show how to use the <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#perform_inference_c" target="_blank" shape="rect" unselectable="">Deserializing A Plan</a> for inference.
+                           </p>
+                        </div><a name="run-engine-c__steps_llb_lql_n1b" shape="rect" unselectable="" class="">
+                           <!-- --></a><ol class="ol steps" id="run-engine-c__steps_llb_lql_n1b" unselectable="">
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Deserialize the TensorRT engine from a file. The file contents are read into a
+                                 buffer and deserialized in-memory.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">std::vector&lt;char&gt; engineData(fsize);
+engineFile.read(engineData.data(), fsize);
+
+std::unique_ptr&lt;nvinfer1::IRuntime&gt; runtime{nvinfer1::createInferRuntime(sample::gLogger.getTRTLogger())};
+
+std::unique_ptr&lt;nvinfer1::ICudaEngine&gt; mEngine(runtime-&gt;deserializeCudaEngine(engineData.data(), fsize, nullptr));</kbd></pre></li>
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">A TensorRT execution context encapsulates execution state such as persistent
+                                 device memory for holding intermediate activation tensors during
+                                 inference.</span><p class="p" unselectable="">Since the segmentation model was built with dynamic shapes enabled, the shape
+                                 of the input must be specified for inference execution. The network output
+                                 shape may be queried to determine the corresponding dimensions of the output
+                                 buffer.
+                              </p><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">auto input_idx = mEngine-&gt;getBindingIndex("input");
+assert(mEngine-&gt;getBindingDataType(input_idx) == nvinfer1::DataType::kFLOAT);
+auto input_dims = nvinfer1::Dims4{1, 3 /* channels */, height, width};
+context-&gt;setBindingDimensions(input_idx, input_dims);
+auto input_size = util::getMemorySize(input_dims, sizeof(float));
+auto output_idx = mEngine-&gt;getBindingIndex("output");
+assert(mEngine-&gt;getBindingDataType(output_idx) == nvinfer1::DataType::kINT32);
+auto output_dims = context-&gt;getBindingDimensions(output_idx);
+auto output_size = util::getMemorySize(output_dims, sizeof(int32_t));</kbd></pre><div class="note note" unselectable=""><span class="notetitle" unselectable="">Note:</span> The binding indices for network I/O can be queried by name.
+                              </div>
+                           </li>
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">In preparation for inference, CUDA device memory is allocated for all inputs
+                                 and outputs, image data is processed and copied into input memory, and a list of
+                                 engine bindings is generated.</span><p class="p" unselectable="">For semantic segmentation, input image data is processed by fitting into a
+                                 range of <samp class="ph codeph" unselectable="">[0, 1]</samp> and normalized using mean <samp class="ph codeph" unselectable="">[0.485,
+                                    0.456, 0.406]</samp> and <samp class="ph codeph" unselectable="">std</samp> deviation
+                                 <samp class="ph codeph" unselectable="">[0.229, 0.224, 0.225]</samp>. Refer to the input-preprocessing
+                                 requirements for the <samp class="ph codeph" unselectable="">torchvision</samp> models <a class="xref" href="https://github.com/pytorch/vision/blob/main/docs/source/models.rst" target="_blank" shape="rect" unselectable="">here</a>. This operation is abstracted
+                                 by the utility class <samp class="ph codeph" unselectable="">RGBImageReader</samp>.
+                              </p><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">void* input_mem{nullptr};
+cudaMalloc(&amp;input_mem, input_size);
+void* output_mem{nullptr};
+cudaMalloc(&amp;output_mem, output_size); 
+const std::vector&lt;float&gt; mean{0.485f, 0.456f, 0.406f};
+const std::vector&lt;float&gt; stddev{0.229f, 0.224f, 0.225f};
+auto input_image{util::RGBImageReader(input_filename, input_dims, mean, stddev)};
+input_image.read();
+auto input_buffer = input_image.process();
+cudaMemcpyAsync(input_mem, input_buffer.get(), input_size, cudaMemcpyHostToDevice, stream);</kbd></pre></li>
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">Inference execution is kicked off using the context’s
+                                 <samp class="ph codeph" unselectable="">executeV2</samp> or <samp class="ph codeph" unselectable="">enqueueV2</samp> methods. After the
+                                 execution is complete, we copy the results back to a host buffer and release all
+                                 device memory allocations.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">void* bindings[] = {input_mem, output_mem};
+bool status = context-&gt;enqueueV2(bindings, stream, nullptr);
+auto output_buffer = std::unique_ptr&lt;int&gt;{new int[output_size]};
+cudaMemcpyAsync(output_buffer.get(), output_mem, output_size, cudaMemcpyDeviceToHost, stream);
+cudaStreamSynchronize(stream);
+
+cudaFree(input_mem);
+cudaFree(output_mem);</kbd></pre></li>
+                           <li class="li step" unselectable=""><span class="ph cmd" unselectable="">To visualize the results, a pseudo-color plot of per-pixel class predictions is
+                                 written out to <samp class="ph codeph" unselectable="">output.ppm</samp>. This is abstracted by the utility
+                                 class <samp class="ph codeph" unselectable="">ArgmaxImageWriter</samp>.</span><pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">const int num_classes{21};
+const std::vector&lt;int&gt; palette{
+	(0x1 &lt;&lt; 25) - 1, (0x1 &lt;&lt; 15) - 1, (0x1 &lt;&lt; 21) - 1};
+auto output_image{util::ArgmaxImageWriter(output_filename, output_dims, palette, num_classes)};
+output_image.process(output_buffer.get());
+output_image.write();</kbd></pre><div class="p" unselectable="">For the test image, the expected output is as follows:
+                                 <div class="fig fignone" id="run-engine-c__fig_ubw_xbv_f4b" unselectable=""><a name="run-engine-c__fig_ubw_xbv_f4b" shape="rect" unselectable="" class="">
+                                       <!-- --></a><span class="figcap" unselectable="">Figure 10. Test Image, Size 1282x1026</span><br clear="none" unselectable="" class=""><br unselectable="" class=""><a name="run-engine-c__image_tny_hl2_yz" shape="rect" unselectable="" class="">
+                                       <!-- --></a><div class="imageleft" unselectable=""><img class="image imageleft" id="run-engine-c__image_tny_hl2_yz" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/test-image-output.PNG" alt="Test Image, Size 1282x1026" unselectable=""></div><br clear="none" unselectable="" class=""><br unselectable="" class=""></div>
+                              </div>
+                           </li>
+                        </ol>
+                     </div>
+                  </div>
+                  <div class="topic task nested1" id="run-engine-python" unselectable=""><a name="run-engine-python" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#run-engine-python" name="run-engine-python" shape="rect" unselectable="" class="">7.3.&nbsp;Running an Engine in Python</a></h3>
+                     <div class="body taskbody" unselectable="">
+                        <div class="abstract" unselectable=""><span class="shortdesc" unselectable=""></span></div>
+                        <div class="section" id="run-engine-python__section_q1b_3sw_f4b" unselectable=""><a name="run-engine-python__section_q1b_3sw_f4b" shape="rect" unselectable="" class="">
+                              <!-- --></a><div class="p" unselectable=""><a name="run-engine-python__ol_x4n_3sw_f4b" shape="rect" unselectable="" class="">
+                                 <!-- --></a><ol class="ol" id="run-engine-python__ol_x4n_3sw_f4b" unselectable="">
+                                 <li class="li" unselectable="">Install the required Python
+                                    packages.<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">$ pip install pycuda</kbd></pre></li>
+                                 <li class="li" unselectable="">Launch Jupyter and use the provided token to log in using a browser
+                                    <samp class="ph codeph" unselectable="">http://&lt;host-ip-address&gt;:8888</samp>.<pre class="pre screen" xml:space="preserve" unselectable=""><kbd class="ph userinput" unselectable="">$ jupyter notebook --port=8888 --no-browser --ip=0.0.0.0 --allow-root</kbd></pre></li>
+                                 <li class="li" unselectable="">Open the <a class="xref" href="https://github.com/NVIDIA/TensorRT/blob/main/quickstart/SemanticSegmentation/tutorial-runtime.ipynb" target="_blank" shape="rect" unselectable=""><samp class="ph codeph" unselectable="">tutorial-runtime.ipynb</samp></a> notebook and follow its
+                                    steps.
+                                 </li>
+                              </ol>
+                           </div>
+                           <p class="p" unselectable="">The TensorRT Python runtime APIs map directly to the C++ API described in <a class="xref" href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#run-engine-c" shape="rect" unselectable="">Running an Engine in C++</a>. 
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               
+               <div class="topic concept nested0" id="notices-header" unselectable=""><a name="notices-header" shape="rect" unselectable="" class="">
+                     <!-- --></a><h2 class="title topictitle1" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#notices-header" name="notices-header" shape="rect" unselectable="" class="">Notices</a></h2>
+                  <div class="topic reference nested1" id="notice" unselectable=""><a name="notice" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#notice" name="notice" shape="rect" unselectable="" class=""></a></h3>
+                     <div class="body refbody" unselectable="">
+                        <div class="section notices" id="notice__section_kbg_pmm_flb" unselectable=""><a name="notice__section_kbg_pmm_flb" shape="rect" unselectable="" class="">
+                              <!-- --></a><h3 class="title sectiontitle notices" unselectable="">Notice</h3>
+                           <p class="p" id="notice__notice-para-1" unselectable=""><a name="notice__notice-para-1" shape="rect" unselectable="" class="">
+                                 <!-- --></a>This document is provided for information purposes
+                              only and shall not be regarded as a warranty of a certain
+                              functionality, condition, or quality of a product.</p>
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                        </div>
+                     </div>
+                  </div>
+                  
+                  
+                  
+                  
+                  
+                  <div class="topic reference nested1" id="copyright-past-to-present" unselectable=""><a name="copyright-past-to-present" shape="rect" unselectable="" class="">
+                        <!-- --></a><h3 class="title topictitle2" unselectable=""><a href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#copyright-past-to-present" name="copyright-past-to-present" shape="rect" unselectable="" class=""></a></h3>
+                     <div class="body refbody" unselectable="">
+                        <div class="section notices" unselectable="">
+                           <h3 class="title sectiontitle notices" unselectable="">Copyright</h3>
+                           <p class="p" unselectable="">© <span class="ph" unselectable="">2021</span>-<span class="ph" unselectable="">2023</span> NVIDIA Corporation &amp;
+                              affiliates. All rights reserved.
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               
+               <hr id="contents-end" style="margin: 581.031px 0px 0px;" unselectable="" class="">
+               
+            </article>
+         </div>
+      </div>
+      <script language="JavaScript" type="text/javascript" charset="utf-8" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/common.min.js.download" unselectable="" class=""></script>
+      <script language="JavaScript" type="text/javascript" charset="utf-8" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/google-analytics-write.js.download" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/ga.js.download" type="text/javascript" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/ga.js(1).download" type="text/javascript" unselectable="" class=""></script><script src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/ga.js(2).download" type="text/javascript" unselectable="" class=""></script>
+      <script language="JavaScript" type="text/javascript" charset="utf-8" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/google-analytics-tracker.js.download" unselectable="" class=""></script>
+      <script type="text/javascript" unselectable="" class="">var switchTo5x=true;</script><script type="text/javascript" unselectable="" class="">stLight.options({publisher: "998dc202-a267-4d8e-bce9-14debadb8d92", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script><script unselectable="" class="">
+        function mountHeader(data = false) {
+          let options = {
+            baseURL: 'https://developer.nvidia.com',
+            signedIn: false,
+          }
+      
+          if (data) {
+            options.menu = data;
+          }
+      
+          new NVDeveloperHeader({
+            target: document.getElementById('nv-dev-header'),
+            props: options
+          });
+        }
+      
+        fetch('https://d29g4g2dyqv443.cloudfront.net/menu/en-US/header.json', { 
+          method: 'GET', 
+          mode: 'no-cors', 
+          headers: { 'Content-Type': 'application/json', }
+        })
+          .then(response => response.json())
+          .then(data => {
+            mountHeader(data);
+          }).catch((error) => {
+            console.log(error);
+            mountHeader();
+          });;  
+        </script>
+      <script type="text/javascript" unselectable="" class="">_satellite.pageBottom();</script><script unselectable="" class="">_satellite["_runScript2"](function(event, target, Promise) {
+//if(typeof s!='undefined'){
+ try{
+  
+  window.ClickDownTrack=function(obj,eventVal,prefix){  
+    try{
+      if(typeof s!='undefined'){
+    secName = prefix+":"+s.pageName;
+    secName=secName.toLowerCase();
+    s.linkTrackVars='events';
+    if(prefix!=='download'){s.eVar4=prefix.toLowerCase();s.linkTrackVars='events,eVar4';}
+    s.events=eventVal;s.linkTrackEvents=eventVal;
+    if(prefix!=='download'){s.tl(obj,'d',prefix);}else{s.tl(obj,'d',secName);}
+	  s.linkTrackVars="None"
+	  s.linkTrackEvents="None" }
+    }catch(e){console.log("Bt downTrack"+e)}
+}
+  }catch(e){console.log("Bt downTrack"+e)}
+try{
+setTimeout(function(){
+if(typeof jQuery!='undefined'){
+jQuery(".col-md-8,col-md-4").on("click","a[href*='driveworks/files/driveinstall-latest']",function(){ClickDownTrack(this,'event4','download');
+});
+jQuery(".col-md-4").on("click","a[href*='driveworks/files/driveinstall-latest']",function(){ClickDownTrack(this,'event4','download');
+});
+jQuery("#panelTargetInstaller").on("click","button.cudaDownloadButton", function() {
+var getTitle=jQuery(this).parent('a').attr('title');ClickDownTrack(this,'event4',getTitle);
+});
+
+jQuery('#agree').on('click', function() {
+   var getIframeVal=jQuery(this).parents('#agreement').children('iframe').attr('src').substring(jQuery('#agree').parents('#agreement').children('iframe').attr('src').lastIndexOf('/')+1).replace('.html','');
+     ClickDownTrack(this,'event10,event4',getIframeVal)})
+if(document.URL.indexOf('embedded/downloads')<0){
+jQuery("a[href*=jetpack-l4t]").click(function(){ClickDownTrack(this,'event10','download')});  
+}
+if(document.URL.indexOf('gameworksdownload')>-1){
+jQuery("a[href*=aftermath-12-windows],a[href*=vrworks-25-sdk]").click(function(){ClickDownTrack(this,'event10','download')}); 
+}
+jQuery('.downloads ul li a.ng-scope.ng-binding').click(function(){
+if(jQuery(this).attr('href')!=='#'){
+  if(jQuery(this).attr('href').indexOf('index.html')<0){
+    if(jQuery(this).attr('href').indexOf('asset')>-1||jQuery(this).attr('href').indexOf('-sdk')>-1){
+      var getVal='download';
+      var lnk=jQuery(this).attr('href');
+      var parts= lnk.split("/");
+      if(parts[parts.length-1]==""){
+      	getVal=parts[parts.length-2];
+      }else{
+      getVal=parts[parts.length-1];
+      }
+      
+      ClickDownTrack(this,'event10',getVal)
+    }
+  }
+}
+})
+  
+if(document.URL.indexOf('/vrworks/vrworks-360video/download')>-1){
+jQuery('.field .field-items .btn').on('click',function(){var getVal=jQuery(this).attr('href').replace('https://developer.nvidia.com/','').replace(/\//g,'-');ClickDownTrack(this,'event10',getVal)})
+}
+if(document.URL.indexOf('rdp/cudnn-download')>-1){
+jQuery('.panel-body p a').on('click',function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('nvidia-grid-software-management-sdk-downloads')>-1){
+  jQuery('#block-system-main a[href*=NVIDIA-GRID-Software-Management-SDK],#block-system-main a[href*=gridsdk-userguide]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('nvwmi-sdk')>-1){
+jQuery('.panel-success a[href*=standalone],.panel-success a[href*=sdk],a[href*=api-reference]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('user')>-1){
+jQuery('#console .container .downloadable-file-link').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('rdp/digits-download')>-1){
+  jQuery('a[href*=nv-deep-learning-repo],a[href*=digits-2-ubuntu-1404-prod]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('video-codec-sdk-archive')>-1){
+  jQuery('.col-md-8 a[href*=video-sdk-601],.col-md-8 a[href*=video_codec_sdk]').click(function(){ClickDownTrack(this,'event10','download')})
+} 
+if(document.URL.indexOf('ffmpeg')>-1){
+  jQuery('a[href*=Using_FFmpeg_with_NVIDIA_GPU_Hardware_Acceleration-pdf]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('designworks/video_codec_sdk/downloads/v8.0')>-1){
+jQuery('a[href*=accept_eula]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('embedded/downloads')>-1){
+if(_satellite.getVar('authStage')=='logged-in'){jQuery('.downloads ul li a.ng-scope.ng-binding').click(function(){
+if(jQuery(this).attr('href')!=='#'){
+  if(jQuery(this).attr('href').indexOf('index.html')<0){
+    if(jQuery(this).attr('href').indexOf('embedded')>-1){
+      ClickDownTrack(this,'event10','download')
+    }
+  }
+}
+}) }else{jQuery('.downloads li a').click(function(){var $this=jQuery(this); var getText=$this.text();ClickOmniTracki(this,'event10','button:section:',getText);})}
+}
+
+
+
+}},2000);
+//}
+}catch(e){console.log("Bt downTrack"+e)}
+//}
+});</script><script unselectable="" class="">_satellite["_runScript3"](function(event, target, Promise) {
+if(typeof jQuery!=='undefined'){
+jQuery('#navbar-collapse a').click(function() {
+	var $this = jQuery(this);
+  var getVal = $this.text();
+
+  if(getVal=='Join'){_satellite.cookie.remove('_dtfmch');}if(!jQuery(this).hasClass("dropdown-toggle")){
+     if(getVal=='Log out'){
+    ClickOmniTrackNavi(this, 'event10,event11,event13', 'link:nav:header:', getVal);
+   }else{ClickOmniTrackNavi(this, 'event10,event11', 'link:nav:header:', getVal);}  
+  }
+
+});
+
+  
+  
+  
+jQuery('.footer-boilerplate a').click(function() {
+	var $this = jQuery(this);
+	var getVal = $this.text();
+	ClickOmniTracki(this, 'event10', 'link:footer:', getVal);
+});}
+});</script><script unselectable="" class="">_satellite["_runScript4"](function(event, target, Promise) {
+
+//if(typeof s!='undefined'){
+   
+  window.ClickOmniTracki=function(obj,eventVal,prefix,secName){  
+  try
+   {
+    if(typeof s!='undefined'){
+      secName = prefix+secName+":"+s.pageName ;
+     secName=secName.toLowerCase();
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName;
+      s.linkTrackVars='events,eVar10,prop10';
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"}
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+window.ClickOmniTrackNavi=function(obj,eventVal,prefix,secName){  
+  try
+   {  
+      if(typeof s!='undefined'){
+     var secN=secName.lastIndexOf('/')+1;
+      secName=secName.substring(secN);
+      secName=secName.toLowerCase();
+      secName=secName.replace(/\//g,':').replace('#','');
+      s.eVar11=s.prop11=secName;
+      secName = prefix+secName+":"+s.pageName;
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName; 
+      s.linkTrackVars='events,eVar10,prop10,eVar11';
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None" }
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+
+
+window.ClickOmniFilter=function(obj,eventVal,prefix,secName,filter){  
+  try
+   {  
+      if(typeof s!='undefined'){
+     var secN=secName.lastIndexOf('/')+1;
+      secName=secName.substring(secN);
+      secName=secName.toLowerCase();
+      secName=secName.replace(/\//g,':').replace('#','');
+     s.eVar35=filter.toLowerCase().replace(/[".]/g,"").replace(/, /g,"|").trim().replace(/: /g,":");
+      secName = prefix+secName+":"+s.pageName;
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName; 
+      s.linkTrackVars='events,eVar10,prop10,eVar35';
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"}
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+
+//}
+
+window.ClickOmniTrackRec=function(obj,eventVal,prefix,secName,recType){  
+  try
+   {
+    if(typeof s!='undefined'){
+      s.list3=secName;
+      secName = prefix+secName+":"+s.pageName ;
+      secName=secName.toLowerCase();
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName;
+	  s.eVar130=recType;
+	  s.linkTrackVars='events,eVar10,prop10,eVar130,list3';
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"}
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+
+window.ClickOmniSearch=function(obj,eventVal,prefix,secName){  
+  try
+   { 
+   if(typeof s!='undefined'){
+   
+       	var srchKeyword=secName;
+      secName = prefix+secName+":"+s.pageName ;
+     secName=secName.toLowerCase();
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName;
+    	s.eVar20=s.prop20=srchKeyword;
+      s.linkTrackVars='events,eVar10,prop10,eVar20,prop20';
+    	
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"}
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+});</script><script unselectable="" class="">_satellite["_runScript2"](function(event, target, Promise) {
+//if(typeof s!='undefined'){
+ try{
+  
+  window.ClickDownTrack=function(obj,eventVal,prefix){  
+    try{
+      if(typeof s!='undefined'){
+    secName = prefix+":"+s.pageName;
+    secName=secName.toLowerCase();
+    s.linkTrackVars='events';
+    if(prefix!=='download'){s.eVar4=prefix.toLowerCase();s.linkTrackVars='events,eVar4';}
+    s.events=eventVal;s.linkTrackEvents=eventVal;
+    if(prefix!=='download'){s.tl(obj,'d',prefix);}else{s.tl(obj,'d',secName);}
+	  s.linkTrackVars="None"
+	  s.linkTrackEvents="None" }
+    }catch(e){console.log("Bt downTrack"+e)}
+}
+  }catch(e){console.log("Bt downTrack"+e)}
+try{
+setTimeout(function(){
+if(typeof jQuery!='undefined'){
+jQuery(".col-md-8,col-md-4").on("click","a[href*='driveworks/files/driveinstall-latest']",function(){ClickDownTrack(this,'event4','download');
+});
+jQuery(".col-md-4").on("click","a[href*='driveworks/files/driveinstall-latest']",function(){ClickDownTrack(this,'event4','download');
+});
+jQuery("#panelTargetInstaller").on("click","button.cudaDownloadButton", function() {
+var getTitle=jQuery(this).parent('a').attr('title');ClickDownTrack(this,'event4',getTitle);
+});
+
+jQuery('#agree').on('click', function() {
+   var getIframeVal=jQuery(this).parents('#agreement').children('iframe').attr('src').substring(jQuery('#agree').parents('#agreement').children('iframe').attr('src').lastIndexOf('/')+1).replace('.html','');
+     ClickDownTrack(this,'event10,event4',getIframeVal)})
+if(document.URL.indexOf('embedded/downloads')<0){
+jQuery("a[href*=jetpack-l4t]").click(function(){ClickDownTrack(this,'event10','download')});  
+}
+if(document.URL.indexOf('gameworksdownload')>-1){
+jQuery("a[href*=aftermath-12-windows],a[href*=vrworks-25-sdk]").click(function(){ClickDownTrack(this,'event10','download')}); 
+}
+jQuery('.downloads ul li a.ng-scope.ng-binding').click(function(){
+if(jQuery(this).attr('href')!=='#'){
+  if(jQuery(this).attr('href').indexOf('index.html')<0){
+    if(jQuery(this).attr('href').indexOf('asset')>-1||jQuery(this).attr('href').indexOf('-sdk')>-1){
+      var getVal='download';
+      var lnk=jQuery(this).attr('href');
+      var parts= lnk.split("/");
+      if(parts[parts.length-1]==""){
+      	getVal=parts[parts.length-2];
+      }else{
+      getVal=parts[parts.length-1];
+      }
+      
+      ClickDownTrack(this,'event10',getVal)
+    }
+  }
+}
+})
+  
+if(document.URL.indexOf('/vrworks/vrworks-360video/download')>-1){
+jQuery('.field .field-items .btn').on('click',function(){var getVal=jQuery(this).attr('href').replace('https://developer.nvidia.com/','').replace(/\//g,'-');ClickDownTrack(this,'event10',getVal)})
+}
+if(document.URL.indexOf('rdp/cudnn-download')>-1){
+jQuery('.panel-body p a').on('click',function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('nvidia-grid-software-management-sdk-downloads')>-1){
+  jQuery('#block-system-main a[href*=NVIDIA-GRID-Software-Management-SDK],#block-system-main a[href*=gridsdk-userguide]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('nvwmi-sdk')>-1){
+jQuery('.panel-success a[href*=standalone],.panel-success a[href*=sdk],a[href*=api-reference]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('user')>-1){
+jQuery('#console .container .downloadable-file-link').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('rdp/digits-download')>-1){
+  jQuery('a[href*=nv-deep-learning-repo],a[href*=digits-2-ubuntu-1404-prod]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('video-codec-sdk-archive')>-1){
+  jQuery('.col-md-8 a[href*=video-sdk-601],.col-md-8 a[href*=video_codec_sdk]').click(function(){ClickDownTrack(this,'event10','download')})
+} 
+if(document.URL.indexOf('ffmpeg')>-1){
+  jQuery('a[href*=Using_FFmpeg_with_NVIDIA_GPU_Hardware_Acceleration-pdf]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('designworks/video_codec_sdk/downloads/v8.0')>-1){
+jQuery('a[href*=accept_eula]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('embedded/downloads')>-1){
+if(_satellite.getVar('authStage')=='logged-in'){jQuery('.downloads ul li a.ng-scope.ng-binding').click(function(){
+if(jQuery(this).attr('href')!=='#'){
+  if(jQuery(this).attr('href').indexOf('index.html')<0){
+    if(jQuery(this).attr('href').indexOf('embedded')>-1){
+      ClickDownTrack(this,'event10','download')
+    }
+  }
+}
+}) }else{jQuery('.downloads li a').click(function(){var $this=jQuery(this); var getText=$this.text();ClickOmniTracki(this,'event10','button:section:',getText);})}
+}
+
+
+
+}},2000);
+//}
+}catch(e){console.log("Bt downTrack"+e)}
+//}
+});</script><script unselectable="" class="">_satellite["_runScript3"](function(event, target, Promise) {
+if(typeof jQuery!=='undefined'){
+jQuery('#navbar-collapse a').click(function() {
+	var $this = jQuery(this);
+  var getVal = $this.text();
+
+  if(getVal=='Join'){_satellite.cookie.remove('_dtfmch');}if(!jQuery(this).hasClass("dropdown-toggle")){
+     if(getVal=='Log out'){
+    ClickOmniTrackNavi(this, 'event10,event11,event13', 'link:nav:header:', getVal);
+   }else{ClickOmniTrackNavi(this, 'event10,event11', 'link:nav:header:', getVal);}  
+  }
+
+});
+
+  
+  
+  
+jQuery('.footer-boilerplate a').click(function() {
+	var $this = jQuery(this);
+	var getVal = $this.text();
+	ClickOmniTracki(this, 'event10', 'link:footer:', getVal);
+});}
+});</script><script unselectable="" class="">_satellite["_runScript4"](function(event, target, Promise) {
+
+//if(typeof s!='undefined'){
+   
+  window.ClickOmniTracki=function(obj,eventVal,prefix,secName){  
+  try
+   {
+    if(typeof s!='undefined'){
+      secName = prefix+secName+":"+s.pageName ;
+     secName=secName.toLowerCase();
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName;
+      s.linkTrackVars='events,eVar10,prop10';
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"}
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+window.ClickOmniTrackNavi=function(obj,eventVal,prefix,secName){  
+  try
+   {  
+      if(typeof s!='undefined'){
+     var secN=secName.lastIndexOf('/')+1;
+      secName=secName.substring(secN);
+      secName=secName.toLowerCase();
+      secName=secName.replace(/\//g,':').replace('#','');
+      s.eVar11=s.prop11=secName;
+      secName = prefix+secName+":"+s.pageName;
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName; 
+      s.linkTrackVars='events,eVar10,prop10,eVar11';
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None" }
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+
+
+window.ClickOmniFilter=function(obj,eventVal,prefix,secName,filter){  
+  try
+   {  
+      if(typeof s!='undefined'){
+     var secN=secName.lastIndexOf('/')+1;
+      secName=secName.substring(secN);
+      secName=secName.toLowerCase();
+      secName=secName.replace(/\//g,':').replace('#','');
+     s.eVar35=filter.toLowerCase().replace(/[".]/g,"").replace(/, /g,"|").trim().replace(/: /g,":");
+      secName = prefix+secName+":"+s.pageName;
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName; 
+      s.linkTrackVars='events,eVar10,prop10,eVar35';
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"}
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+
+//}
+
+window.ClickOmniTrackRec=function(obj,eventVal,prefix,secName,recType){  
+  try
+   {
+    if(typeof s!='undefined'){
+      s.list3=secName;
+      secName = prefix+secName+":"+s.pageName ;
+      secName=secName.toLowerCase();
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName;
+	  s.eVar130=recType;
+	  s.linkTrackVars='events,eVar10,prop10,eVar130,list3';
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"}
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+
+window.ClickOmniSearch=function(obj,eventVal,prefix,secName){  
+  try
+   { 
+   if(typeof s!='undefined'){
+   
+       	var srchKeyword=secName;
+      secName = prefix+secName+":"+s.pageName ;
+     secName=secName.toLowerCase();
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName;
+    	s.eVar20=s.prop20=srchKeyword;
+      s.linkTrackVars='events,eVar10,prop10,eVar20,prop20';
+    	
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"}
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+});</script><script unselectable="" class="">_satellite["_runScript2"](function(event, target, Promise) {
+//if(typeof s!='undefined'){
+ try{
+  
+  window.ClickDownTrack=function(obj,eventVal,prefix){  
+    try{
+      if(typeof s!='undefined'){
+    secName = prefix+":"+s.pageName;
+    secName=secName.toLowerCase();
+    s.linkTrackVars='events';
+    if(prefix!=='download'){s.eVar4=prefix.toLowerCase();s.linkTrackVars='events,eVar4';}
+    s.events=eventVal;s.linkTrackEvents=eventVal;
+    if(prefix!=='download'){s.tl(obj,'d',prefix);}else{s.tl(obj,'d',secName);}
+	  s.linkTrackVars="None"
+	  s.linkTrackEvents="None" }
+    }catch(e){console.log("Bt downTrack"+e)}
+}
+  }catch(e){console.log("Bt downTrack"+e)}
+try{
+setTimeout(function(){
+if(typeof jQuery!='undefined'){
+jQuery(".col-md-8,col-md-4").on("click","a[href*='driveworks/files/driveinstall-latest']",function(){ClickDownTrack(this,'event4','download');
+});
+jQuery(".col-md-4").on("click","a[href*='driveworks/files/driveinstall-latest']",function(){ClickDownTrack(this,'event4','download');
+});
+jQuery("#panelTargetInstaller").on("click","button.cudaDownloadButton", function() {
+var getTitle=jQuery(this).parent('a').attr('title');ClickDownTrack(this,'event4',getTitle);
+});
+
+jQuery('#agree').on('click', function() {
+   var getIframeVal=jQuery(this).parents('#agreement').children('iframe').attr('src').substring(jQuery('#agree').parents('#agreement').children('iframe').attr('src').lastIndexOf('/')+1).replace('.html','');
+     ClickDownTrack(this,'event10,event4',getIframeVal)})
+if(document.URL.indexOf('embedded/downloads')<0){
+jQuery("a[href*=jetpack-l4t]").click(function(){ClickDownTrack(this,'event10','download')});  
+}
+if(document.URL.indexOf('gameworksdownload')>-1){
+jQuery("a[href*=aftermath-12-windows],a[href*=vrworks-25-sdk]").click(function(){ClickDownTrack(this,'event10','download')}); 
+}
+jQuery('.downloads ul li a.ng-scope.ng-binding').click(function(){
+if(jQuery(this).attr('href')!=='#'){
+  if(jQuery(this).attr('href').indexOf('index.html')<0){
+    if(jQuery(this).attr('href').indexOf('asset')>-1||jQuery(this).attr('href').indexOf('-sdk')>-1){
+      var getVal='download';
+      var lnk=jQuery(this).attr('href');
+      var parts= lnk.split("/");
+      if(parts[parts.length-1]==""){
+      	getVal=parts[parts.length-2];
+      }else{
+      getVal=parts[parts.length-1];
+      }
+      
+      ClickDownTrack(this,'event10',getVal)
+    }
+  }
+}
+})
+  
+if(document.URL.indexOf('/vrworks/vrworks-360video/download')>-1){
+jQuery('.field .field-items .btn').on('click',function(){var getVal=jQuery(this).attr('href').replace('https://developer.nvidia.com/','').replace(/\//g,'-');ClickDownTrack(this,'event10',getVal)})
+}
+if(document.URL.indexOf('rdp/cudnn-download')>-1){
+jQuery('.panel-body p a').on('click',function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('nvidia-grid-software-management-sdk-downloads')>-1){
+  jQuery('#block-system-main a[href*=NVIDIA-GRID-Software-Management-SDK],#block-system-main a[href*=gridsdk-userguide]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('nvwmi-sdk')>-1){
+jQuery('.panel-success a[href*=standalone],.panel-success a[href*=sdk],a[href*=api-reference]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('user')>-1){
+jQuery('#console .container .downloadable-file-link').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('rdp/digits-download')>-1){
+  jQuery('a[href*=nv-deep-learning-repo],a[href*=digits-2-ubuntu-1404-prod]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('video-codec-sdk-archive')>-1){
+  jQuery('.col-md-8 a[href*=video-sdk-601],.col-md-8 a[href*=video_codec_sdk]').click(function(){ClickDownTrack(this,'event10','download')})
+} 
+if(document.URL.indexOf('ffmpeg')>-1){
+  jQuery('a[href*=Using_FFmpeg_with_NVIDIA_GPU_Hardware_Acceleration-pdf]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('designworks/video_codec_sdk/downloads/v8.0')>-1){
+jQuery('a[href*=accept_eula]').click(function(){ClickDownTrack(this,'event10','download')})
+}
+if(document.URL.indexOf('embedded/downloads')>-1){
+if(_satellite.getVar('authStage')=='logged-in'){jQuery('.downloads ul li a.ng-scope.ng-binding').click(function(){
+if(jQuery(this).attr('href')!=='#'){
+  if(jQuery(this).attr('href').indexOf('index.html')<0){
+    if(jQuery(this).attr('href').indexOf('embedded')>-1){
+      ClickDownTrack(this,'event10','download')
+    }
+  }
+}
+}) }else{jQuery('.downloads li a').click(function(){var $this=jQuery(this); var getText=$this.text();ClickOmniTracki(this,'event10','button:section:',getText);})}
+}
+
+
+
+}},2000);
+//}
+}catch(e){console.log("Bt downTrack"+e)}
+//}
+});</script><script unselectable="" class="">_satellite["_runScript3"](function(event, target, Promise) {
+if(typeof jQuery!=='undefined'){
+jQuery('#navbar-collapse a').click(function() {
+	var $this = jQuery(this);
+  var getVal = $this.text();
+
+  if(getVal=='Join'){_satellite.cookie.remove('_dtfmch');}if(!jQuery(this).hasClass("dropdown-toggle")){
+     if(getVal=='Log out'){
+    ClickOmniTrackNavi(this, 'event10,event11,event13', 'link:nav:header:', getVal);
+   }else{ClickOmniTrackNavi(this, 'event10,event11', 'link:nav:header:', getVal);}  
+  }
+
+});
+
+  
+  
+  
+jQuery('.footer-boilerplate a').click(function() {
+	var $this = jQuery(this);
+	var getVal = $this.text();
+	ClickOmniTracki(this, 'event10', 'link:footer:', getVal);
+});}
+});</script><script unselectable="" class="">_satellite["_runScript4"](function(event, target, Promise) {
+
+//if(typeof s!='undefined'){
+   
+  window.ClickOmniTracki=function(obj,eventVal,prefix,secName){  
+  try
+   {
+    if(typeof s!='undefined'){
+      secName = prefix+secName+":"+s.pageName ;
+     secName=secName.toLowerCase();
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName;
+      s.linkTrackVars='events,eVar10,prop10';
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"}
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+window.ClickOmniTrackNavi=function(obj,eventVal,prefix,secName){  
+  try
+   {  
+      if(typeof s!='undefined'){
+     var secN=secName.lastIndexOf('/')+1;
+      secName=secName.substring(secN);
+      secName=secName.toLowerCase();
+      secName=secName.replace(/\//g,':').replace('#','');
+      s.eVar11=s.prop11=secName;
+      secName = prefix+secName+":"+s.pageName;
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName; 
+      s.linkTrackVars='events,eVar10,prop10,eVar11';
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None" }
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+
+
+window.ClickOmniFilter=function(obj,eventVal,prefix,secName,filter){  
+  try
+   {  
+      if(typeof s!='undefined'){
+     var secN=secName.lastIndexOf('/')+1;
+      secName=secName.substring(secN);
+      secName=secName.toLowerCase();
+      secName=secName.replace(/\//g,':').replace('#','');
+     s.eVar35=filter.toLowerCase().replace(/[".]/g,"").replace(/, /g,"|").trim().replace(/: /g,":");
+      secName = prefix+secName+":"+s.pageName;
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName; 
+      s.linkTrackVars='events,eVar10,prop10,eVar35';
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"}
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+
+//}
+
+window.ClickOmniTrackRec=function(obj,eventVal,prefix,secName,recType){  
+  try
+   {
+    if(typeof s!='undefined'){
+      s.list3=secName;
+      secName = prefix+secName+":"+s.pageName ;
+      secName=secName.toLowerCase();
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName;
+	  s.eVar130=recType;
+	  s.linkTrackVars='events,eVar10,prop10,eVar130,list3';
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"}
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+
+window.ClickOmniSearch=function(obj,eventVal,prefix,secName){  
+  try
+   { 
+   if(typeof s!='undefined'){
+   
+       	var srchKeyword=secName;
+      secName = prefix+secName+":"+s.pageName ;
+     secName=secName.toLowerCase();
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName;
+    	s.eVar20=s.prop20=srchKeyword;
+      s.linkTrackVars='events,eVar10,prop10,eVar20,prop20';
+    	
+      s.tl(obj,'o',secName); 
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"}
+	 }catch(error){console.log("Bt DownTrack"+error)}}
+});</script>
+<script unselectable="" class="">
+if("undefined"!=typeof jQuery||"undefined"!=typeof $){var runOnce=!0;jQuery(document).on("click","input#FirstName",(function(){if(runOnce){var e=jQuery(this).parents("form").attr("id"),t="form:"+e+":start:"+_satellite.getVar("pageName");e&&(s.linkTrackVars="eVar10,eVar29,prop29,events",s.linkTrackEvents="event10,event29",s.events="event10,event29",s.eVar29=e+":"+_satellite.getVar("pageName"),s.prop29=s.eVar29,s.eVar10=t,s.tl(this,"o",t)),runOnce=!1}})),window.MktoForms2&&MktoForms2.whenReady((function(e){var t=_satellite.cookie.get("sc_cmp"),n=document.querySelector('form input[name*="ncid"]');void 0!==t&&""!=t?n.setAttribute("value",t):document.location.href.indexOf("ncid=")<0&&n.setAttribute("value","no-ncid"),e.onSuccess((function(e){var t="mktoform_"+e.formid;ClickOmniTracki(!0,"event10,event30","form:",t+":success:")}))}))}
+</script><script unselectable="" class="">
+function gtag(){dataLayer.push(arguments)}var script=document.createElement("script");script.type="text/javascript",script.src="https://www.googletagmanager.com/gtag/js?id=AW-1041695361",document.getElementsByTagName("head")[0].appendChild(script),window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","AW-1041695361");
+</script><script unselectable="" class="">
+gtag("event","page_view",{send_to:"AW-1041695361",user_id:"replace with value"});
+</script><script unselectable="" class="">_satellite["_runScript5"](function(event, target, Promise) {
+var cjs=document.createElement("script");cjs.type="text/javascript",cjs.src="https://images.nvidia.com/content/websidestory/aa/cdtm.js",document.getElementsByTagName("head")[0].appendChild(cjs);
+});</script><script unselectable="" class="">_satellite["_runScript6"](function(event, target, Promise) {
+!function(){window._uxa=window._uxa||[];try{"undefined"!=typeof s&&(void 0!==s.eVar1&&window._uxa.push(["setCustomVariable",1,"Page_Name",_satellite.getVar("pageName"),3]),void 0!==s.eVar9&&window._uxa.push(["setCustomVariable",2,"Country_Language_Code",s.eVar9,3]),void 0!==s.eVar13&&window._uxa.push(["setCustomVariable",3,"Nvid",s.eVar13,3]),void 0!==s.eVar19&&window._uxa.push(["setCustomVariable",4,"New_vs_Returned",s.eVar19,3]),void 0!==s.eVar20&&window._uxa.push(["setCustomVariable",5,"Search_Term",s.eVar20,3]),void 0!==s.eVar32&&window._uxa.push(["setCustomVariable",6,"Company_Name",s.eVar32,3]),void 0!==s.eVar33&&window._uxa.push(["setCustomVariable",7,"Industry_Name",s.eVar33,3]),void 0!==s.eVar41&&window._uxa.push(["setCustomVariable",8,"Ncid",s.eVar41,3]),void 0!==s.referrer&&window._uxa.push(["setCustomVariable",9,"Referrer",s.referrer,3]))}catch(e){}if("undefined"==typeof CS_CONF){window._uxa.push(["setPath",window.location.pathname+window.location.hash.replace("#","?__")]);var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="//t.contentsquare.net/uxa/c6af8848c2687.js",document.getElementsByTagName("head")[0].appendChild(e)}else window._uxa.push(["trackPageview",window.location.pathname+window.location.hash.replace("#","?__")])}();
+});</script><img alt="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/ipv" style="display: none;" unselectable="" class=""><img alt="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/u" style="display: none;" unselectable="" class=""><cs-native-frame-holder hidden="" unselectable="" class=""><template shadowrootmode="closed"><iframe id="cs-native-frame" hidden="" title="Intentionally blank" sandbox="allow-same-origin"></iframe></template></cs-native-frame-holder><img alt="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/u(1)" style="display: none;" unselectable="" class=""><script unselectable="" class="">_satellite["_runScript7"](function(event, target, Promise) {
+!function(){window._uxa=window._uxa||[];try{"undefined"!=typeof s&&(void 0!==s.eVar1&&window._uxa.push(["setCustomVariable",1,"Page_Name",_satellite.getVar("pageName"),3]),void 0!==s.eVar9&&window._uxa.push(["setCustomVariable",2,"Country_Language_Code",s.eVar9,3]),void 0!==s.eVar13&&window._uxa.push(["setCustomVariable",3,"Nvid",s.eVar13,3]),void 0!==s.eVar19&&window._uxa.push(["setCustomVariable",4,"New_vs_Returned",s.eVar19,3]),void 0!==s.eVar20&&window._uxa.push(["setCustomVariable",5,"Search_Term",s.eVar20,3]),void 0!==s.eVar32&&window._uxa.push(["setCustomVariable",6,"Company_Name",s.eVar32,3]),void 0!==s.eVar33&&window._uxa.push(["setCustomVariable",7,"Industry_Name",s.eVar33,3]),void 0!==s.eVar41&&window._uxa.push(["setCustomVariable",8,"Ncid",s.eVar41,3]),void 0!==s.referrer&&window._uxa.push(["setCustomVariable",9,"Referrer",s.referrer,3]))}catch(e){}if("undefined"==typeof CS_CONF){window._uxa.push(["setPath",window.location.pathname+window.location.hash.replace("#","?__")]);var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="//t.contentsquare.net/uxa/c6af8848c2687.js",document.getElementsByTagName("head")[0].appendChild(e)}else window._uxa.push(["trackPageview",window.location.pathname+window.location.hash.replace("#","?__")])}();
+});</script><img alt="" style="display: none;" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/ipv(1)" unselectable="" class=""><img alt="" style="display: none;" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/ipv(2)" unselectable="" class=""><img alt="" style="display: none;" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/ipv(3)" unselectable="" class=""><img alt="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/ipv(4)" style="display: none;" unselectable="" class=""><img alt="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/u(2)" style="display: none;" unselectable="" class=""><script unselectable="" class="">
+if("undefined"!=typeof jQuery||"undefined"!=typeof $){var runOnce=!0;jQuery(document).on("click","input#FirstName",(function(){if(runOnce){var e=jQuery(this).parents("form").attr("id"),t="form:"+e+":start:"+_satellite.getVar("pageName");e&&(s.linkTrackVars="eVar10,eVar29,prop29,events",s.linkTrackEvents="event10,event29",s.events="event10,event29",s.eVar29=e+":"+_satellite.getVar("pageName"),s.prop29=s.eVar29,s.eVar10=t,s.tl(this,"o",t)),runOnce=!1}})),window.MktoForms2&&MktoForms2.whenReady((function(e){var t=_satellite.cookie.get("sc_cmp"),n=document.querySelector('form input[name*="ncid"]');void 0!==t&&""!=t?n.setAttribute("value",t):document.location.href.indexOf("ncid=")<0&&n.setAttribute("value","no-ncid"),e.onSuccess((function(e){var t="mktoform_"+e.formid;ClickOmniTracki(!0,"event10,event30","form:",t+":success:")}))}))}
+</script><script unselectable="" class="">
+function gtag(){dataLayer.push(arguments)}var script=document.createElement("script");script.type="text/javascript",script.src="https://www.googletagmanager.com/gtag/js?id=AW-1041695361",document.getElementsByTagName("head")[0].appendChild(script),window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","AW-1041695361");
+</script><script unselectable="" class="">
+gtag("event","page_view",{send_to:"AW-1041695361",user_id:"replace with value"});
+</script><script unselectable="" class="">_satellite["_runScript5"](function(event, target, Promise) {
+var cjs=document.createElement("script");cjs.type="text/javascript",cjs.src="https://images.nvidia.com/content/websidestory/aa/cdtm.js",document.getElementsByTagName("head")[0].appendChild(cjs);
+});</script><img alt="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/ipv(5)" style="display: none;" unselectable="" class=""><img alt="" src="./Quick Start Guide __ NVIDIA Deep Learning TensorRT Documentation_files/u(3)" style="display: none;" unselectable="" class=""><script unselectable="" class="">
+if("undefined"!=typeof jQuery||"undefined"!=typeof $){var runOnce=!0;jQuery(document).on("click","input#FirstName",(function(){if(runOnce){var e=jQuery(this).parents("form").attr("id"),t="form:"+e+":start:"+_satellite.getVar("pageName");e&&(s.linkTrackVars="eVar10,eVar29,prop29,events",s.linkTrackEvents="event10,event29",s.events="event10,event29",s.eVar29=e+":"+_satellite.getVar("pageName"),s.prop29=s.eVar29,s.eVar10=t,s.tl(this,"o",t)),runOnce=!1}})),window.MktoForms2&&MktoForms2.whenReady((function(e){var t=_satellite.cookie.get("sc_cmp"),n=document.querySelector('form input[name*="ncid"]');void 0!==t&&""!=t?n.setAttribute("value",t):document.location.href.indexOf("ncid=")<0&&n.setAttribute("value","no-ncid"),e.onSuccess((function(e){var t="mktoform_"+e.formid;ClickOmniTracki(!0,"event10,event30","form:",t+":success:")}))}))}
+</script><script unselectable="" class="">
+function gtag(){dataLayer.push(arguments)}var script=document.createElement("script");script.type="text/javascript",script.src="https://www.googletagmanager.com/gtag/js?id=AW-1041695361",document.getElementsByTagName("head")[0].appendChild(script),window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","AW-1041695361");
+</script><script unselectable="" class="">
+gtag("event","page_view",{send_to:"AW-1041695361",user_id:"replace with value"});
+</script><script unselectable="" class="">_satellite["_runScript5"](function(event, target, Promise) {
+var cjs=document.createElement("script");cjs.type="text/javascript",cjs.src="https://images.nvidia.com/content/websidestory/aa/cdtm.js",document.getElementsByTagName("head")[0].appendChild(cjs);
+});</script></body></html>
